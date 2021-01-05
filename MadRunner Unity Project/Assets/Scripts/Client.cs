@@ -16,6 +16,18 @@ public class Client : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         print("Client connected to Master Server!");
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        print("Client connected to Lobby!");
+        MenuManager.instance.OpenMenu("Join");
+    }
+
+    public override void OnLeftLobby()
+    {
+        print("Client disconnected from Lobby");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
