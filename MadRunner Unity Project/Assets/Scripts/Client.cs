@@ -21,6 +21,12 @@ public class Client : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject roomListItemPrefab;
 
+    [SerializeField]
+    Transform playerListItemTransf;
+
+    [SerializeField]
+    GameObject playerListItemPrefab;
+
     private void Awake()
     {
         instance = this;
@@ -43,6 +49,7 @@ public class Client : MonoBehaviourPunCallbacks
     {
         print("Client connected to Lobby!");
         MenuManager.instance.OpenMenu("Join");
+        PhotonNetwork.NickName = "Anonymous Pleb " + Random.Range(0,5000).ToString("0000");
     }
 
     public override void OnLeftLobby()
@@ -69,6 +76,13 @@ public class Client : MonoBehaviourPunCallbacks
         print("Client joined a Room!");
         MenuManager.instance.OpenMenu("Room");
         roomMenuNameText.text = PhotonNetwork.CurrentRoom.Name;
+
+        int c = 0;
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            print("player found. Total: " + (++c).ToString());
+            Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -105,6 +119,11 @@ public class Client : MonoBehaviourPunCallbacks
         {
             Instantiate(roomListItemPrefab, roomListItemTransf).GetComponent<RoomListItem>().Set(i);
         }
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(newPlayer);
     }
 
 }
