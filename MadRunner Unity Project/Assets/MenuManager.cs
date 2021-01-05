@@ -18,11 +18,11 @@ public class MenuManager : MonoBehaviour
     {
         foreach (Menu m in menus)
         {
-            if(m.mName == name)
+            if (m.mName == name)
             {
                 OpenMenu(m);
             }
-            else if(m.openned == true)
+            else if (m.openned == true)
             {
                 CloseMenu(m);
             }
