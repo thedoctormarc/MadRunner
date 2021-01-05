@@ -7,11 +7,24 @@ using TMPro;
 
 public class Client : MonoBehaviourPunCallbacks
 {
+    public static Client instance;
+
     [SerializeField]
     TMP_InputField roomName;
 
     [SerializeField]
     TMP_Text roomMenuNameText;
+
+    [SerializeField]
+    Transform roomListItemTransf;
+
+    [SerializeField]
+    GameObject roomListItemPrefab;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -74,5 +87,24 @@ public class Client : MonoBehaviourPunCallbacks
         print("Client left the Room");
         MenuManager.instance.OpenMenu("Join");
     }
-  
+
+    public void JoinRoom(RoomInfo info)
+    {
+        PhotonNetwork.JoinRoom(info.Name);
+        MenuManager.instance.OpenMenu("Loading");
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        foreach(Transform t in roomListItemTransf)
+        {
+            Destroy(t.gameObject);
+        }
+
+        foreach(RoomInfo i in roomList)
+        {
+            Instantiate(roomListItemPrefab, roomListItemTransf).GetComponent<RoomListItem>().Set(i);
+        }
+    }
+
 }

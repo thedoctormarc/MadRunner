@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
             {
                 OpenMenu(m);
             }
-            else if (m.openned == true)
+            else if (m.opened == true)
             {
                 CloseMenu(m);
             }
@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach (Menu m in menus)
         {
-            if (m.openned == true)
+            if (m.opened == true)
             {
                 CloseMenu(m);
             }

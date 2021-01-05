@@ -5,17 +5,17 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
     public string mName;
-    public bool openned;
+    public bool opened;
 
     public void Open()
     {
-        openned = true;
+        opened = true;
         gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        openned = false;
+        opened = false;
         gameObject.SetActive(false);
     }
 }
