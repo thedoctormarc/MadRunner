@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Client : MonoBehaviourPunCallbacks
+public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallbacks
 {
     public static Client instance;
 
@@ -47,6 +47,7 @@ public class Client : MonoBehaviourPunCallbacks
         print("Client connected to Master Server!");
         PhotonNetwork.JoinLobby();
         PhotonNetwork.AutomaticallySyncScene = true;
+       
     }
 
     public override void OnJoinedLobby()
@@ -139,6 +140,14 @@ public class Client : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         PhotonNetwork.LoadLevel(1); // load the game scene
+    }
+
+    void IInRoomCallbacks.OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(PhotonNetwork.IsMasterClient == true)
+        {
+            playButton.SetActive(true);
+        }
     }
 
 }
