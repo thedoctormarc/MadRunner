@@ -27,6 +27,9 @@ public class Client : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject playerListItemPrefab;
 
+    [SerializeField]
+    GameObject playButton;
+
     private void Awake()
     {
         instance = this;
@@ -43,6 +46,7 @@ public class Client : MonoBehaviourPunCallbacks
     {
         print("Client connected to Master Server!");
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
@@ -82,6 +86,12 @@ public class Client : MonoBehaviourPunCallbacks
         {
             print("player found. Total: " + (++c).ToString());
             Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
+        }
+
+        // Master client is the only one that can start the game
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            playButton.SetActive(false);
         }
     }
 
@@ -124,6 +134,11 @@ public class Client : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(newPlayer);
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(1); // load the game scene
     }
 
 }

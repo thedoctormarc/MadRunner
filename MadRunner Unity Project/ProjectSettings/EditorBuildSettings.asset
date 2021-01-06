@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MadRunnerScene.unity
     guid: ea95f53109fc224458507551443c67a3
+  - enabled: 1
+    path: Assets/Scenes/MadRunnerGame.unity
+    guid: 53dffe14abb960a4e9b73cfe6a285586
   m_configObjects: {}
