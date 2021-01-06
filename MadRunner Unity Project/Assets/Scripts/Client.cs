@@ -90,10 +90,8 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
         }
 
         // Master client is the only one that can start the game
-        if (PhotonNetwork.IsMasterClient == false)
-        {
-            playButton.SetActive(false);
-        }
+        playButton.SetActive(PhotonNetwork.IsMasterClient);
+
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -142,12 +140,10 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
         PhotonNetwork.LoadLevel(1); // load the game scene
     }
 
-    void IInRoomCallbacks.OnMasterClientSwitched(Player newMasterClient)
+
+   public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        if(PhotonNetwork.IsMasterClient == true)
-        {
-            playButton.SetActive(true);
-        }
+        playButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
 }
