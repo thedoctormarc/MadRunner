@@ -82,10 +82,13 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
         MenuManager.instance.OpenMenu("Room");
         roomMenuNameText.text = PhotonNetwork.CurrentRoom.Name;
 
-        int c = 0;
+        foreach (Transform t in playerListItemTransf)
+        {
+            Destroy(t.gameObject);
+        }
+
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            print("player found. Total: " + (++c).ToString());
             Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
         }
 
@@ -126,6 +129,10 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
 
         foreach(RoomInfo i in roomList)
         {
+            if(i.RemovedFromList)
+            {
+                continue;
+            }
             Instantiate(roomListItemPrefab, roomListItemTransf).GetComponent<RoomListItem>().Set(i);
         }
     }
