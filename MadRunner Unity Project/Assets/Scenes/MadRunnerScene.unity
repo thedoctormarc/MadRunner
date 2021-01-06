@@ -2449,6 +2449,7 @@ MonoBehaviour:
   roomListItemPrefab: {fileID: 8778608822603295047, guid: a5d195bcfa27ae74093f966b417f420c, type: 3}
   playerListItemTransf: {fileID: 1044760236}
   playerListItemPrefab: {fileID: 418315929857824602, guid: e0e14eb15a55ccb46b0d51566f825868, type: 3}
+  playButton: {fileID: 13312081}
 --- !u!4 &1591886858
 Transform:
   m_ObjectHideFlags: 0
@@ -2531,7 +2532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1738040560
 MonoBehaviour:
   m_ObjectHideFlags: 0
