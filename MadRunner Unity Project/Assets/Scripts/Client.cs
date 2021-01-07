@@ -4,13 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.IO;
 
-public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallbacks
+public class Client : MonoBehaviourPunCallbacks
 {
     public static Client instance;
 
     [SerializeField]
     TMP_InputField roomName;
+
+    [SerializeField]
+    TMP_InputField playerInputName;
 
     [SerializeField]
     TMP_Text roomMenuNameText;
@@ -33,6 +38,15 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
     private void Awake()
     {
         instance = this;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        if(s.buildIndex == 1) // game aka circuit
+        {
+            PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+        }
     }
 
     void Start()
@@ -153,4 +167,22 @@ public class Client : MonoBehaviourPunCallbacks, Photon.Realtime.IInRoomCallback
         playButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
+    public void AcceptChangeName()
+    {
+        if(string.IsNullOrEmpty(playerInputName.text) == false)
+        {
+            PhotonNetwork.NickName = playerInputName.text;
+
+            foreach (Transform t in playerListItemTransf)
+            {
+                Destroy(t.gameObject);
+            }
+
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
+            }
+
+        }
+    }
 }
