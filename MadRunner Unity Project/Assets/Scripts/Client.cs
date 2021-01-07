@@ -96,15 +96,7 @@ public class Client : MonoBehaviourPunCallbacks
         MenuManager.instance.OpenMenu("Room");
         roomMenuNameText.text = PhotonNetwork.CurrentRoom.Name;
 
-        foreach (Transform t in playerListItemTransf)
-        {
-            Destroy(t.gameObject);
-        }
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
-        }
+        UpdatePlayerList();
 
         // Master client is the only one that can start the game
         playButton.SetActive(PhotonNetwork.IsMasterClient);
@@ -173,22 +165,20 @@ public class Client : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = playerInputName.text;
 
-            foreach (Transform t in playerListItemTransf)
-            {
-                Destroy(t.gameObject);
-            }
-
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
-            }
-
+            UpdatePlayerList();
         }
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) // used to change the player list in the first scene
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            UpdatePlayerList();
+        }
+    }
 
+    void UpdatePlayerList()
+    {
         foreach (Transform t in playerListItemTransf)
         {
             Destroy(t.gameObject);
@@ -199,4 +189,6 @@ public class Client : MonoBehaviourPunCallbacks
             Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
         }
     }
+
 }
+
