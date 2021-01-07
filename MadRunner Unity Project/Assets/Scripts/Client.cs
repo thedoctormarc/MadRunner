@@ -167,7 +167,7 @@ public class Client : MonoBehaviourPunCallbacks
         playButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
-    public void AcceptChangeName()
+    public void AcceptChangeName() 
     {
         if(string.IsNullOrEmpty(playerInputName.text) == false)
         {
@@ -183,6 +183,20 @@ public class Client : MonoBehaviourPunCallbacks
                 Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
             }
 
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+
+        foreach (Transform t in playerListItemTransf)
+        {
+            Destroy(t.gameObject);
+        }
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            Instantiate(playerListItemPrefab, playerListItemTransf).GetComponent<PlayerListItem>().Set(p);
         }
     }
 }
