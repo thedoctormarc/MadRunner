@@ -97,7 +97,7 @@ public class CarController : MonoBehaviour
     private void AdjustAudio() // TODO photon audio 
     {
         float maxCarSpeed = 47f;
-        aS.volume  = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (maxCarSpeed - 0f)) + 0f; // volume depends on speed
+        aS.volume  =  Math.Max(0.2f, (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (maxCarSpeed - 0f)) + 0f); // volume depends on speed
         aS.pitch = 0.7f + aS.volume;
 
     }
