@@ -26,9 +26,11 @@ public class CarController : MonoBehaviour
     [Range(0.25f, 2.0f)]
     public float centerOfMassHeight = 0.25f;
 
+    public AudioSource aS;
     public void Start()
     {
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
+        aS = GetComponent<AudioSource>();
     }
 
     void OnValidate()
@@ -44,6 +46,7 @@ public class CarController : MonoBehaviour
         Motor();
         Steering();
         UpdateWheels();
+        AdjustAudio();
     }
 
     private void GetInput()
@@ -90,4 +93,13 @@ public class CarController : MonoBehaviour
         trans.rotation = rot;
         trans.position = pos;
     }
+
+    private void AdjustAudio() // TODO photon audio 
+    {
+        float maxCarSpeed = 47f;
+        aS.volume  = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (maxCarSpeed - 0f)) + 0f; // volume depends on speed
+        aS.pitch = 0.7f + aS.volume;
+
+    }
+
 }
