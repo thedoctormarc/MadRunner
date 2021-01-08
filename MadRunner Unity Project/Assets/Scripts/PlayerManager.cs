@@ -15,17 +15,32 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        if(PV.IsMine)
+        
+    }
+
+    public void Set(Color carColor)
+    {
+        if (PV.IsMine)
         {
-            CreateController();
+            CreateController(carColor);
         }
     }
 
-    void CreateController()
+    void CreateController(Color carColor)
     {
         Debug.Log("Player Controller Instantiated.");
 
         Vector3 position = new Vector3(Random.Range(-20.0f, 20.0f), 0, Random.Range(-20.0f, 20.0f));
-        PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "Car"), position, Quaternion.identity);
+        GameObject car = PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "Car"), position, Quaternion.identity);
+
+        // spawn it with the previously selected color
+        Renderer r = car.transform.GetChild(0).GetComponent<Renderer>();
+
+        int range = r.materials.Length;
+
+        for (int j = 0; j < range; ++j)
+        {
+            r.materials[j].color = carColor;
+        }
     }
 }

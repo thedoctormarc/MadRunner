@@ -2981,6 +2981,7 @@ MonoBehaviour:
   playerListItemTransf: {fileID: 1044760236}
   playerListItemPrefab: {fileID: 418315929857824602, guid: e0e14eb15a55ccb46b0d51566f825868, type: 3}
   playButton: {fileID: 13312081}
+  cp: {fileID: 1082473562}
 --- !u!4 &1591886858
 Transform:
   m_ObjectHideFlags: 0

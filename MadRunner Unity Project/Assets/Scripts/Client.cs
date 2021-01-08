@@ -35,6 +35,9 @@ public class Client : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject playButton;
 
+    [SerializeField]
+    public FlexibleColorPicker cp;
+
     private void Awake()
     {
         instance = this;
@@ -45,7 +48,10 @@ public class Client : MonoBehaviourPunCallbacks
     {
         if(s.buildIndex == 1) // game aka circuit
         {
-            PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            GameObject go = PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+
+            // pass the client car color to the car manager
+            go.GetComponent<PlayerManager>().Set(cp.color);
         }
     }
 
