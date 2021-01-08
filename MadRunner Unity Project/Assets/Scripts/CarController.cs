@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CarController : MonoBehaviour
 {
@@ -23,8 +24,15 @@ public class CarController : MonoBehaviour
 
     public Rigidbody rb;
 
+    PhotonView PV;
+
     [Range(0.25f, 2.0f)]
     public float centerOfMassHeight = 0.25f;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
 
     public void Start()
     {
@@ -39,6 +47,10 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         // TODO: return if PV not mine, Photon!!
+        if (!PV.IsMine)
+        {
+            //return;
+        }
 
         GetInput();
         Motor();
