@@ -36,6 +36,11 @@ public class CarController : MonoBehaviour
 
     public void Start()
     {
+        if(!PV.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+        }
+
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
     }
 
@@ -49,7 +54,7 @@ public class CarController : MonoBehaviour
         // TODO: return if PV not mine, Photon!!
         if (!PV.IsMine)
         {
-            //return;
+            return;
         }
 
         GetInput();
