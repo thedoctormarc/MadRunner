@@ -26,8 +26,8 @@ public class CarController : MonoBehaviour
     [Range(0.25f, 2.0f)]
     public float centerOfMassHeight = 0.25f;
 
-    public AudioSource aS;
-    public void Start()
+    private AudioSource aS;
+    public void Start()  // volume depends on speed
     {
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
         aS = GetComponent<AudioSource>();
