@@ -39,6 +39,7 @@ public class CarController : MonoBehaviour
         if(!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(rb);
         }
 
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
