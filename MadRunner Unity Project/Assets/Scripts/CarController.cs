@@ -1,8 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon;
+using Photon.Realtime;
+using Photon.Pun;
 
 public class CarController : MonoBehaviour
 {
@@ -27,14 +29,14 @@ public class CarController : MonoBehaviour
     public float centerOfMassHeight = 0.25f;
 
     private AudioSource aS;
-    public void Start()  // volume depends on speed
-    {
-        PV = GetComponent<PhotonView>();
-    }
+
+    PhotonView PV;
 
     public void Start()
     {
-        if(!PV.IsMine)
+        PV = GetComponent<PhotonView>();
+
+        if (!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
