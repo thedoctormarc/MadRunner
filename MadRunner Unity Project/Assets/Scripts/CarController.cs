@@ -6,7 +6,7 @@ using Photon;
 using Photon.Realtime;
 using Photon.Pun;
 
-public class CarController : MonoBehaviour
+public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     private float horizontalInput;
     private float verticalInput;
@@ -31,6 +31,14 @@ public class CarController : MonoBehaviour
     private AudioSource aS;
 
     PhotonView PV;
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+        Material bodyMat = gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().materials[0];
+        Color c = new Color((float)instantiationData[0], (float)instantiationData[1], (float)instantiationData[2], (float)instantiationData[3]);
+        bodyMat.color = c;
+    }
 
     public void Start()
     {
