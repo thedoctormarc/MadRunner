@@ -52,6 +52,9 @@ public class Client : MonoBehaviourPunCallbacks
 
             // pass the client car color to the car manager
             go.GetComponent<PlayerManager>().Set(cp.color);
+
+            // Instantiate dynamic rigidbody props
+            InstantiateAllNetworkedProps();
         }
     }
 
@@ -196,5 +199,35 @@ public class Client : MonoBehaviourPunCallbacks
         }
     }
 
+    void InstantiateAllNetworkedProps()
+    {
+        string path = Application.dataPath + "/Networked Data.txt";
+
+        string[] data = File.ReadAllLines(path);
+
+        for (int i = 0; i < data.Length; ++i)
+        {
+            string line = data[i];
+            string[] words = line.Split(' ');
+
+            // name
+            string name = words[0];
+
+            // position
+            string posLine = words[1];
+            string[] numbers = posLine.Split(':');
+
+            Vector3 position = new Vector3(float.Parse(numbers[0]), float.Parse(numbers[1]), float.Parse(numbers[2]));
+
+            // rotation
+            string rotLine = words[2];
+            string[] numbers2 = rotLine.Split(':');
+            Quaternion rotation = new Quaternion(float.Parse(numbers2[0]), float.Parse(numbers2[1]), float.Parse(numbers2[2]), float.Parse(numbers2[3]));
+
+            // Instantiation
+            PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", name), position, rotation);
+
+        }
+    }
 }
 
