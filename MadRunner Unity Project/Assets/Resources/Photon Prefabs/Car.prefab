@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_laps: 3
-  current_lap: 1
+  current_lap: 0
 --- !u!65 &1344589945785226918
 BoxCollider:
   m_ObjectHideFlags: 0

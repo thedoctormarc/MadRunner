@@ -9,7 +9,7 @@ public class LapLogic : MonoBehaviour
     PhotonView PV;
 
     public int max_laps = 3;
-    public int current_lap = 1;
+    public int current_lap = 0;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class LapLogic : MonoBehaviour
         {
             GameObject go_lap = GameObject.Find("Lap");
             Text text = go_lap.GetComponent<Text>();
-            text.text = current_lap.ToString() + "/" + max_laps.ToString();
+            text.text = "LAP: " + current_lap.ToString() + "/" + max_laps.ToString();
         }
     }
 }
