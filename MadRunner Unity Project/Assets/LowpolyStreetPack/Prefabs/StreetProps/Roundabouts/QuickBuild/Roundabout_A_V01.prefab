@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 400018}
   - component: {fileID: 3300016}
   - component: {fileID: 2300016}
-  - component: {fileID: 6500000}
+  - component: {fileID: 4764393873324467311}
   m_Layer: 0
   m_Name: Roundabout_A
   m_TagString: Untagged
@@ -778,8 +778,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6500000
-BoxCollider:
+--- !u!64 &4764393873324467311
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -788,6 +788,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7.8569236, y: 7.8569236, z: 0.91418684}
-  m_Center: {x: 0, y: 0, z: 0.45709342}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300082, guid: 29b8da6fbd3c2b542bf7bcda4beeab81, type: 3}
