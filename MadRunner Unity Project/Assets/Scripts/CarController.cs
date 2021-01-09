@@ -29,6 +29,17 @@ public class CarController : MonoBehaviour
     private AudioSource aS;
     public void Start()  // volume depends on speed
     {
+        PV = GetComponent<PhotonView>();
+    }
+
+    public void Start()
+    {
+        if(!PV.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(rb);
+        }
+
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
         aS = GetComponent<AudioSource>();
     }
