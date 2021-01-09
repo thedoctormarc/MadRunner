@@ -54,6 +54,10 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         // TODO: return if PV not mine, Photon!!
+        if (!PV.IsMine)
+        {
+            return;
+        }
 
         GetInput();
         Motor();
