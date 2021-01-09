@@ -6,17 +6,21 @@ using UnityEngine.UI;
 public class ScoreLogic : MonoBehaviour
 {
     Text text;
-    float total_time;
+    float time;
 
     void Start()
     {
         text = GetComponent<Text>();
-        total_time = 0.0f;
+        time = 0.0f;
     }
 
     void Update()
     {
-        total_time += Time.deltaTime;
-        text.text = total_time.ToString("#.00");
+        time += Time.deltaTime;
+        float minutes = time / 60.0f;
+        float seconds = time % 60.0f;
+        float milliseconds = time * 100.0f % 100.0f;
+        string textTime = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes, (int)seconds, (int)milliseconds);
+        text.text = textTime.ToString();
     }
 }
