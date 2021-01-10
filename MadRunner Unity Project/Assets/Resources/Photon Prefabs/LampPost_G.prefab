@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: -760410283629191415}
   - component: {fileID: 6007381611493445364}
   - component: {fileID: 5006869684672113296}
+  - component: {fileID: 8179488911183627990}
   m_Layer: 0
   m_Name: LampPost_G
   m_TagString: Untagged
@@ -522,9 +523,10 @@ MonoBehaviour:
   prefixField: -1
   observableSearch: 0
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: 6007381611493445364}
+  - {fileID: 8179488911183627990}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -556,3 +558,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30992ff5f5e970847a793d68bc3c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8179488911183627990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906507549253983924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3

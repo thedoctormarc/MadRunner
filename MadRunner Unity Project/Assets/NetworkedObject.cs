@@ -11,11 +11,11 @@ public class NetworkedObject : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if(GetComponent<PhotonView>().IsMine == false)
+       /* if(GetComponent<PhotonView>().IsMine == false)
         {
             Destroy(GetComponent<Rigidbody>());
             Destroy(GetComponent<BoxCollider>());
-        }
+        }*/
     }
      
 }

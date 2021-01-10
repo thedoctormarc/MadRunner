@@ -54,7 +54,11 @@ public class Client : MonoBehaviourPunCallbacks
             go.GetComponent<PlayerManager>().Set(cp.color);
 
             // Instantiate dynamic rigidbody props
-            InstantiateAllNetworkedProps();
+            if(PhotonNetwork.IsMasterClient == true)
+            {
+                InstantiateAllNetworkedProps();
+            }
+           
         }
     }
 
@@ -229,5 +233,6 @@ public class Client : MonoBehaviourPunCallbacks
 
         }
     }
+
 }
 
