@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5331382159058927399}
   - component: {fileID: -3489480582689250554}
   - component: {fileID: -779622811749972347}
-  - component: {fileID: -2581689905849120597}
+  - component: {fileID: 2294582589217825238}
   m_Layer: 0
   m_Name: RoadBlock_A1
   m_TagString: Untagged
@@ -135,6 +135,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -779622811749972347}
+  - {fileID: 2294582589217825238}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-2581689905849120597
+--- !u!114 &2294582589217825238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,6 +164,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30992ff5f5e970847a793d68bc3c35f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
