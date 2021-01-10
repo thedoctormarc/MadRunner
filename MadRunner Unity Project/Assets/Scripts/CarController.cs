@@ -127,4 +127,15 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     }
 
+    void OnCollisionEnter(Collision collision) // if colliding with a dynamic prop, transfer ownership from master client to our client, so they can interact  
+    {
+        PhotonView PV = collision.gameObject.GetComponent<PhotonView>();
+        CarController CC = collision.gameObject.GetComponent<CarController>();
+
+        if (PV && !CC)
+        {
+            Debug.Log("Car taking ownership of object from master so it can interact with it!");
+            PV.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
+    }
 }
