@@ -38,6 +38,7 @@ public class Client : MonoBehaviourPunCallbacks
     [SerializeField]
     public FlexibleColorPicker cp;
 
+
     private void Awake()
     {
         instance = this;
