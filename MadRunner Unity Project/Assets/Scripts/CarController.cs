@@ -32,6 +32,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     PhotonView PV;
 
+    public GameObject rearviewImage, rearviewBorder;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;
@@ -52,11 +54,23 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
         aS = GetComponent<AudioSource>();
+
+        rearviewBorder = GameObject.Find("Rearview Border");
+        rearviewImage = rearviewBorder.transform.GetChild(0).gameObject;
     }
 
     void OnValidate()
     {
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
+    }
+
+    void Update ()
+    {
+        if(Input.GetKeyDown(KeyCode.C) && PV.IsMine)
+        {
+            rearviewImage.SetActive(!rearviewImage.activeSelf);
+            rearviewBorder.SetActive(!rearviewBorder.activeSelf);
+        }
     }
 
     private void FixedUpdate()

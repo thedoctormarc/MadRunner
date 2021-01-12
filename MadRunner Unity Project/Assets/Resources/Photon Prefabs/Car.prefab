@@ -229,6 +229,7 @@ MonoBehaviour:
   maxBrakeSpeed: 5
   rb: {fileID: 1344589945785226919}
   centerOfMassHeight: 0.45
+  rearviewCamera: {fileID: 7715535476292425495}
 --- !u!54 &1344589945785226919
 Rigidbody:
   m_ObjectHideFlags: 0
