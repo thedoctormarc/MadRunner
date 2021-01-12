@@ -46,7 +46,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         if (!PV.IsMine)
         {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(GetComponentInChildren<Camera>().gameObject.transform.parent.gameObject); // destroy camera holder directly (both cameras)
             Destroy(rb);
         }
 
