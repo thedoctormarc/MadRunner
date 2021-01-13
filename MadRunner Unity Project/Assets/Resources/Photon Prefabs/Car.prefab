@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_laps: 3
-  current_lap: 0
+  current_lap: 1
 --- !u!1 &2389901167394434915
 GameObject:
   m_ObjectHideFlags: 0
