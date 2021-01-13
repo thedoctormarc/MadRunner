@@ -1,17 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class StartLineLogic : MonoBehaviour
 {
+    PhotonView PV;
+
+    private void Start()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        GameObject go = other.gameObject;
-        LapLogic ll = go.GetComponent<LapLogic>();
-
-        if (ll.current_lap < ll.max_laps)
+        if (PV.IsMine)
         {
-            ++ll.current_lap;
+            GameObject go = other.gameObject;
+            LapLogic ll = go.GetComponent<LapLogic>();
+            ll.AddLap();
         }
     }
 }

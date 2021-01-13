@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: -3587791878441922456}
   - component: {fileID: -4220507706627035486}
   - component: {fileID: 952042732899605533}
+  - component: {fileID: 4623942455711083176}
   m_Layer: 0
   m_Name: Car
   m_TagString: MainCamera
@@ -229,7 +230,8 @@ MonoBehaviour:
   maxBrakeSpeed: 5
   rb: {fileID: 1344589945785226919}
   centerOfMassHeight: 0.45
-  rearviewCamera: {fileID: 7715535476292425495}
+  rearviewImage: {fileID: 0}
+  rearviewBorder: {fileID: 0}
 --- !u!54 &1344589945785226919
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -408,6 +410,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4623942455711083176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344589945785226913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92713792cb6d40144962ed4c1a30ca54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_laps: 3
+  current_lap: 0
 --- !u!1 &2389901167394434915
 GameObject:
   m_ObjectHideFlags: 0

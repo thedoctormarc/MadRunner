@@ -25,4 +25,12 @@ public class LapLogic : MonoBehaviour
             text.text = "LAP: " + current_lap.ToString() + "/" + max_laps.ToString();
         }
     }
+
+    public void AddLap()
+    {
+        if (current_lap < max_laps)
+        {
+            ++current_lap;
+        }
+    }
 }
