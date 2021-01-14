@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.Globalization;
 
 public class Client : MonoBehaviourPunCallbacks
 {
@@ -209,10 +210,15 @@ public class Client : MonoBehaviourPunCallbacks
 
         string[] data = File.ReadAllLines(path);
 
+        // setup stuff so the code doesnt unexpectedly mess up at will
+        CultureInfo c = CultureInfo.InvariantCulture;
+
         for (int i = 0; i < data.Length; ++i)
         {
+
             string line = data[i];
-            string[] words = line.Split(' ');
+            string lineFormatted = line.ToString(c);
+            string[] words = lineFormatted.Split(' ');
 
             // name
             string name = words[0];
@@ -221,12 +227,22 @@ public class Client : MonoBehaviourPunCallbacks
             string posLine = words[1];
             string[] numbers = posLine.Split(':');
 
-            Vector3 position = new Vector3(float.Parse(numbers[0]), float.Parse(numbers[1]), float.Parse(numbers[2]));
+            float x = float.Parse(numbers[0], c);
+            float y = float.Parse(numbers[1], c);
+            float z = float.Parse(numbers[2], c);
+
+            Vector3 position = new Vector3(x,y,z);
 
             // rotation
             string rotLine = words[2];
             string[] numbers2 = rotLine.Split(':');
-            Quaternion rotation = new Quaternion(float.Parse(numbers2[0]), float.Parse(numbers2[1]), float.Parse(numbers2[2]), float.Parse(numbers2[3]));
+
+            float r1 = float.Parse(numbers2[0], c);
+            float r2 = float.Parse(numbers2[1], c);
+            float r3 = float.Parse(numbers2[2], c);
+            float r4 = float.Parse(numbers2[3], c);
+
+            Quaternion rotation = new Quaternion(r1, r2, r3, r4);
 
             // Instantiation
             PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", name), position, rotation);
