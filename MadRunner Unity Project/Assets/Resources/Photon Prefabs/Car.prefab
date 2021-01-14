@@ -174,12 +174,12 @@ GameObject:
   - component: {fileID: 1343178896924464233}
   - component: {fileID: 1344589945785226916}
   - component: {fileID: 1344589945785226919}
-  - component: {fileID: 3521256904835771483}
   - component: {fileID: 1344589945785226918}
   - component: {fileID: -3587791878441922456}
   - component: {fileID: -4220507706627035486}
   - component: {fileID: 952042732899605533}
   - component: {fileID: 4623942455711083176}
+  - component: {fileID: -6947003024641921832}
   m_Layer: 0
   m_Name: Car
   m_TagString: MainCamera
@@ -248,20 +248,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3521256904835771483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344589945785226913}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92713792cb6d40144962ed4c1a30ca54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_laps: 3
-  current_lap: 0
 --- !u!65 &1344589945785226918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -424,6 +410,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_laps: 3
   current_lap: 1
+--- !u!114 &-6947003024641921832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344589945785226913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950b2521734651b43b9e30836c85243c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2389901167394434915
 GameObject:
   m_ObjectHideFlags: 0
