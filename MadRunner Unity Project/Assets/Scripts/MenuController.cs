@@ -24,11 +24,21 @@ public class MenuController : MonoBehaviour
             {
                 Time.timeScale = 0.0f;
                 dark.enabled = true;
+
+                for (int i = 0; i < transform.childCount; ++i)
+                {
+                    transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
             else
             {
                 Time.timeScale = 1.0f;
                 dark.enabled = false;
+
+                for (int i = 0; i < transform.childCount; ++i)
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
         }
     }
