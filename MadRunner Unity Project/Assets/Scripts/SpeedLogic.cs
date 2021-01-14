@@ -8,6 +8,8 @@ public class SpeedLogic : MonoBehaviour
     GameObject go_speed;
     Text text;
     Rigidbody rb;
+    
+    float multiplier = 4.0f;
 
     void Start()
     {
@@ -16,12 +18,12 @@ public class SpeedLogic : MonoBehaviour
         text = go_speed.GetComponent<Text>();
         rb = GetComponent<Rigidbody>();
 
-        text.text = (int)rb.velocity.magnitude + " Km/h";
+        text.text = (int)(rb.velocity.magnitude * multiplier) + " Km/h";
     }
 
 
     void Update()
     {
-        text.text = (int)rb.velocity.magnitude + " Km/h";
+        text.text = (int)(rb.velocity.magnitude * multiplier) + " Km/h";
     }
 }
