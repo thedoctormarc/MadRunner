@@ -146,7 +146,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         float maxCarSpeed = 47f;
         aS.volume  =  Math.Max(0.2f, (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (maxCarSpeed - 0f)) + 0f); // volume depends on speed
         aS.pitch = 0.7f + aS.volume;
-
     }
 
     void BrakeLights()
