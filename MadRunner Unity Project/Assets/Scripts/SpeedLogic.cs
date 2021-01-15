@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class SpeedLogic : MonoBehaviour
 {
+    PhotonView PV;
+
     GameObject go_speed;
     Text text;
     Rigidbody rb;
@@ -19,6 +22,8 @@ public class SpeedLogic : MonoBehaviour
 
     void Start()
     {
+        PV = GetComponent<PhotonView>();
+
         go_speed = GameObject.Find("Speed");
         game_config = GameObject.Find("GameConfig");
 
@@ -26,15 +31,19 @@ public class SpeedLogic : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         metrics = game_config.GetComponent<Metrics>();
 
-        text.text = (int)(rb.velocity.magnitude * metric_system_multiplier) + " Km/h";
+        if(PV.IsMine)
+            text.text = (int)(rb.velocity.magnitude * metric_system_multiplier) + " Km/h";
     }
 
 
     void Update()
     {
-        if(metrics.is_imperial_system)
-            text.text = (int)(rb.velocity.magnitude * imperial_system_multiplier) + " MPH";
-        else
-            text.text = (int)(rb.velocity.magnitude * metric_system_multiplier) + " Km/h";
+        if (PV.IsMine)
+        {
+            if (metrics.is_imperial_system)
+                text.text = (int)(rb.velocity.magnitude * imperial_system_multiplier) + " MPH";
+            else
+                text.text = (int)(rb.velocity.magnitude * metric_system_multiplier) + " Km/h";
+        }
     }
 }
