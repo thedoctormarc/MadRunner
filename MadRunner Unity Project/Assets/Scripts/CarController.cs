@@ -34,6 +34,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     public GameObject rearviewImage, rearviewBorder;
 
+    // Lights
+    GameObject rear_left_light;
+    GameObject rear_right_light;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;
@@ -57,6 +61,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         rearviewBorder = GameObject.Find("Rearview Border");
         rearviewImage = rearviewBorder.transform.GetChild(0).gameObject;
+
+        rear_left_light = transform.Find("RearLeftLight").gameObject;
+        rear_right_light = transform.Find("RearRightLight").gameObject;
     }
 
     void OnValidate()
@@ -86,6 +93,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         Steering();
         UpdateWheels();
         AdjustAudio();
+        BrakeLights();
     }
 
     private void GetInput()
@@ -139,6 +147,20 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         aS.volume  =  Math.Max(0.2f, (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (maxCarSpeed - 0f)) + 0f); // volume depends on speed
         aS.pitch = 0.7f + aS.volume;
 
+    }
+
+    void BrakeLights()
+    {
+        if(isBreaking)
+        {
+            rear_left_light.SetActive(true);
+            rear_right_light.SetActive(true);
+        }
+        else
+        {
+            rear_left_light.SetActive(false);
+            rear_right_light.SetActive(false);
+        }
     }
 
     void OnCollisionEnter(Collision collision) // if colliding with a dynamic prop, transfer ownership from master client to our client, so they can interact  
