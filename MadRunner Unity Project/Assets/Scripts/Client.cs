@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.IO;
@@ -13,13 +14,13 @@ public class Client : MonoBehaviourPunCallbacks
     public static Client instance;
 
     [SerializeField]
-    TMP_InputField roomName;
+    InputField roomName;
 
     [SerializeField]
-    TMP_InputField playerInputName;
+    InputField playerInputName;
 
     [SerializeField]
-    TMP_Text roomMenuNameText;
+    InputField roomMenuNameText;
 
     [SerializeField]
     Transform roomListItemTransf;
