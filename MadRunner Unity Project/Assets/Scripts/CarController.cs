@@ -55,7 +55,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     {
         PV = GetComponent<PhotonView>();
         playerNameText = transform.Find("Canvas").Find("PlayerName").gameObject;
-        playerNameText.GetComponent<Text>().text = PhotonNetwork.LocalPlayer.NickName;
+        playerNameText.GetComponent<Text>().text = PV.Owner.NickName;
 
         if (!PV.IsMine)
         {
