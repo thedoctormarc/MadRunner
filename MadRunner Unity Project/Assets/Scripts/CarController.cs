@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon;
 using Photon.Realtime;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -38,6 +39,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     GameObject rear_left_light;
     GameObject rear_right_light;
 
+    // UI
+    GameObject playerNameText; 
+
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;
@@ -46,14 +51,21 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         bodyMat.color = c;
     }
 
-    public void Start()
+    public void Awake()
     {
         PV = GetComponent<PhotonView>();
+        playerNameText = transform.Find("Canvas").Find("PlayerName").gameObject;
+        playerNameText.GetComponent<Text>().text = PV.Owner.NickName;
 
         if (!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject.transform.parent.gameObject); // destroy camera holder directly (both cameras)
             Destroy(rb);
+        }
+        else
+        {
+            GameManager.instance.onwPlayer = gameObject;
+            playerNameText.transform.parent.gameObject.SetActive(false); // don't want to see my name/UI! Disable the canvas
         }
 
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
@@ -64,6 +76,16 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         rear_left_light = transform.Find("RearLeftLight").gameObject;
         rear_right_light = transform.Find("RearRightLight").gameObject;
+    }
+
+    public void Start()
+    {
+        // If not my car, set the canvas to my car's camera so that I can see the other car's UI (name)
+        if (!PV.IsMine)
+        {
+            transform.Find("Canvas").GetComponent<Canvas>().worldCamera = GameManager.instance.onwPlayer.transform.Find("CameraHolder").Find("Camera").GetComponent<Camera>();
+        }
+
     }
 
     void OnValidate()
@@ -173,4 +195,22 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
     }
+
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting && PV.IsMine)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(aS.volume);
+            stream.SendNext(aS.pitch);
+        }
+        else if (stream.IsWriting == false && PV.IsMine == false)
+        {
+            // Network player, receive data
+            aS.volume = (float)stream.ReceiveNext();
+            aS.pitch = (float)stream.ReceiveNext();
+        }
+    }
+
 }
