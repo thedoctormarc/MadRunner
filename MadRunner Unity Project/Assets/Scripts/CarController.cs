@@ -7,7 +7,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.UI;
 
-public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
+public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback, IPunObservable
 {
     private float horizontalInput;
     private float verticalInput;
@@ -197,19 +197,23 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     }
 
 
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting && PV.IsMine)
         {
             // We own this player: send the others our data
             stream.SendNext(aS.volume);
             stream.SendNext(aS.pitch);
+            stream.SendNext(rear_left_light.activeSelf);
+            stream.SendNext(rear_right_light.activeSelf);
         }
         else if (stream.IsWriting == false && PV.IsMine == false)
         {
             // Network player, receive data
             aS.volume = (float)stream.ReceiveNext();
             aS.pitch = (float)stream.ReceiveNext();
+            rear_left_light.SetActive((bool)stream.ReceiveNext());
+            rear_right_light.SetActive((bool)stream.ReceiveNext());
         }
     }
 
