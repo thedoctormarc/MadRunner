@@ -1807,7 +1807,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 147070, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
       propertyPath: m_Name
-      value: RightNitrous
+      value: RightTurbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 147070, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 406172, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2053,7 +2057,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 147070, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
       propertyPath: m_Name
-      value: RightNitrous (1)
+      value: LeftTurbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 147070, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 406172, guid: 6b69d01ad85dff94aa775857321af239, type: 3}
       propertyPath: m_LocalRotation.x

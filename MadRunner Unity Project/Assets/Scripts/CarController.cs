@@ -13,6 +13,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     private float verticalInput;
     private float steerAngle;
     private bool isBreaking;
+    private bool isTurbo;
 
     public WheelCollider LF_Col, RF_Col, LB_Col, RB_Col;
     public Transform LF, RF, LB, RB;
@@ -38,6 +39,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Lights
     GameObject rear_left_light;
     GameObject rear_right_light;
+
+    // Turbo
+    GameObject left_turbo;
+    GameObject right_turbo;
 
     // UI
     GameObject playerNameText; 
@@ -76,6 +81,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         rear_left_light = transform.Find("RearLeftLight").gameObject;
         rear_right_light = transform.Find("RearRightLight").gameObject;
+
+        left_turbo = transform.Find("LeftTurbo").gameObject;
+        right_turbo = transform.Find("RightTurbo").gameObject;
     }
 
     public void Start()
@@ -116,6 +124,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         UpdateWheels();
         AdjustAudio();
         BrakeLights();
+        CheckTurbo();
     }
 
     private void GetInput()
@@ -123,6 +132,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
+        isTurbo = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void Steering()
@@ -184,6 +194,20 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
     }
 
+    void CheckTurbo()
+    {
+        if (isTurbo)
+        {
+            left_turbo.SetActive(true);
+            right_turbo.SetActive(true);
+        }
+        else
+        {
+            left_turbo.SetActive(false);
+            right_turbo.SetActive(false);
+        }
+    }
+
     void OnCollisionEnter(Collision collision) // if colliding with a dynamic prop, transfer ownership from master client to our client, so they can interact  
     {
         PhotonView PV = collision.gameObject.GetComponent<PhotonView>();
@@ -206,6 +230,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             stream.SendNext(aS.pitch);
             stream.SendNext(rear_left_light.activeSelf);
             stream.SendNext(rear_right_light.activeSelf);
+            stream.SendNext(left_turbo.activeSelf);
+            stream.SendNext(right_turbo.activeSelf);
         }
         else if (stream.IsWriting == false && PV.IsMine == false)
         {
@@ -214,6 +240,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             aS.pitch = (float)stream.ReceiveNext();
             rear_left_light.SetActive((bool)stream.ReceiveNext());
             rear_right_light.SetActive((bool)stream.ReceiveNext());
+            left_turbo.SetActive((bool)stream.ReceiveNext());
+            right_turbo.SetActive((bool)stream.ReceiveNext());
         }
     }
 
