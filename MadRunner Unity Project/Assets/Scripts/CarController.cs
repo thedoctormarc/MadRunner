@@ -121,10 +121,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         GetInput();
         Motor();
         Steering();
+        CheckTurbo();
         UpdateWheels();
         AdjustAudio();
         BrakeLights();
-        CheckTurbo();
     }
 
     private void GetInput()
@@ -200,6 +200,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         {
             left_turbo.SetActive(true);
             right_turbo.SetActive(true);
+
+            rb.AddForce(transform.forward * 3.5f, ForceMode.Acceleration);
         }
         else
         {
