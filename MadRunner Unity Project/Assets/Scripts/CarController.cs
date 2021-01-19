@@ -15,6 +15,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     private bool isBreaking;
     private bool isTurbo;
 
+    // for interpolation
+    private bool isTurboPressedDown;
+    private bool isTurboReleased;
+
     public WheelCollider LF_Col, RF_Col, LB_Col, RB_Col;
     public Transform LF, RF, LB, RB;
 
@@ -43,6 +47,14 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Turbo
     GameObject left_turbo;
     GameObject right_turbo;
+
+    float t = 0.0f;
+    bool camera_turbo_change = false;
+
+    private float max_fov = 90.0f;
+    private float default_fov = 60.0f;
+
+    public Camera cam; // Car's main camera
 
     // UI
     GameObject playerNameText; 
@@ -133,6 +145,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
         isTurbo = Input.GetKey(KeyCode.LeftShift);
+        isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
+        isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
     }
 
     private void Steering()
@@ -198,6 +212,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     {
         if (isTurbo)
         {
+            if(!camera_turbo_change)
+            {
+                t = 0.0f;
+                camera_turbo_change = true;
+            }
+            else if(t < 1.0f)
+            {
+                cam.fieldOfView = Mathf.Lerp(default_fov, max_fov, t);
+                t += Time.deltaTime * 2.0f;
+            }
+
             left_turbo.SetActive(true);
             right_turbo.SetActive(true);
 
@@ -205,6 +230,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
         else
         {
+            if(camera_turbo_change)
+            {
+                t = 0.0f;
+                camera_turbo_change = false;
+            }
+            else if(t < 1.0f)
+            {
+                cam.fieldOfView = Mathf.Lerp(max_fov, default_fov, t);
+                t += Time.deltaTime * 2.0f;
+            }
+
             left_turbo.SetActive(false);
             right_turbo.SetActive(false);
         }

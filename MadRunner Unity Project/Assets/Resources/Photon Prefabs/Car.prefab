@@ -331,6 +331,7 @@ MonoBehaviour:
   centerOfMassHeight: 0.45
   rearviewImage: {fileID: 0}
   rearviewBorder: {fileID: 0}
+  cam: {fileID: 7013563498496368836}
 --- !u!54 &1344589945785226919
 Rigidbody:
   m_ObjectHideFlags: 0
