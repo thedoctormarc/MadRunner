@@ -220,7 +220,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             else if(t < 1.0f)
             {
                 cam.fieldOfView = Mathf.Lerp(default_fov, max_fov, t);
-                t += Time.deltaTime * 2.0f;
+                t += Time.deltaTime * 3.0f;
             }
 
             left_turbo.SetActive(true);
@@ -238,7 +238,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             else if(t < 1.0f)
             {
                 cam.fieldOfView = Mathf.Lerp(max_fov, default_fov, t);
-                t += Time.deltaTime * 2.0f;
+                t += Time.deltaTime * 3.0f;
             }
 
             left_turbo.SetActive(false);
