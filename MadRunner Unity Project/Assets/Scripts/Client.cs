@@ -67,7 +67,7 @@ public class Client : MonoBehaviourPunCallbacks
     void Start()
     {
         print("Client connecting to Server...");
-        PhotonNetwork.GameVersion = "0.3";
+        PhotonNetwork.GameVersion = "0.6";
         PhotonNetwork.ConnectUsingSettings();
     }
 
