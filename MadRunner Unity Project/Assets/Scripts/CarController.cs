@@ -57,8 +57,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     public Camera cam; // Car's main camera
 
     // UI
-    GameObject playerNameText; 
+    GameObject playerNameText;
 
+    // to simulate surfaces
+    float _angularDrag;
+    float _sidewaysStifness;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
@@ -86,6 +89,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
 
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
+
+        // get rb values
+        _angularDrag = rb.angularDrag;
+        _sidewaysStifness = transform.Find("Wheels").Find("Colliders").GetChild(0).GetComponent<WheelCollider>().sidewaysFriction.stiffness;
+
         aS = GetComponent<AudioSource>();
 
         rearviewBorder = GameObject.Find("Rearview Border");
@@ -256,6 +264,53 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             Debug.Log("Car taking ownership of object from master so it can interact with it!");
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
+ 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        PhotonView PV = other.gameObject.GetComponent<PhotonView>();
+        CarController CC = other.gameObject.GetComponent<CarController>();
+
+        if (PV && !CC)
+        {
+            Debug.Log("Car taking ownership of object from master so it can interact with it!");
+            PV.TransferOwnership(PhotonNetwork.LocalPlayer);
+
+            if (other.gameObject.CompareTag("water") == true)
+            {
+                OnWater(true);
+            }
+        }
+    }
+
+   void OnCollisionExit(Collision collision)
+    {
+        PhotonView PV = collision.gameObject.GetComponent<PhotonView>();
+        CarController CC = collision.gameObject.GetComponent<CarController>();
+
+        if (PV && !CC)
+        {
+            Debug.Log("Car taking ownership of object from master so it can interact with it!");
+            PV.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        PhotonView PV = other.gameObject.GetComponent<PhotonView>();
+        CarController CC = other.gameObject.GetComponent<CarController>();
+
+        if (PV && !CC)
+        {
+            Debug.Log("Car taking ownership of object from master so it can interact with it!");
+            PV.TransferOwnership(PhotonNetwork.LocalPlayer);
+
+            if (other.gameObject.CompareTag("water") == true)
+            {
+                OnWater(false);
+            }
+        }
     }
 
 
@@ -280,6 +335,22 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             rear_right_light.SetActive((bool)stream.ReceiveNext());
             left_turbo.SetActive((bool)stream.ReceiveNext());
             right_turbo.SetActive((bool)stream.ReceiveNext());
+        }
+    }
+
+    void OnWater(bool on)
+    {
+        float angularDrag = (on) ? 0f : _angularDrag;
+        float stiffness = (on) ? 0.5f : _sidewaysStifness;
+
+        rb.angularDrag = angularDrag;
+
+        GameObject wheelColliders = transform.Find("Wheels").Find("Colliders").gameObject;
+
+        for(int i = 0; i < wheelColliders.transform.childCount; ++i)
+        {
+            WheelFrictionCurve c = wheelColliders.transform.GetChild(i).GetComponent<WheelCollider>().sidewaysFriction;
+            c.stiffness = stiffness;
         }
     }
 
