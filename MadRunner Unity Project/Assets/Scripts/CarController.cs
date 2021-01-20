@@ -6,6 +6,7 @@ using Photon;
 using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback, IPunObservable
 {
@@ -59,6 +60,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // UI
     GameObject playerNameText;
 
+    // PP reference
+    GameObject pp;
+    PostProcessVolume pp_v;
+    ChromaticAberration ca;
+
     // to simulate surfaces
     float _angularDrag;
     float _sidewaysStifness;
@@ -104,6 +110,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         left_turbo = transform.Find("LeftTurbo").gameObject;
         right_turbo = transform.Find("RightTurbo").gameObject;
+
+        pp = GameObject.Find("PostProcessingEffects");
+        pp_v = pp.GetComponent<PostProcessVolume>();
+        ca = pp_v.profile.GetSetting<ChromaticAberration>();
     }
 
     public void Start()
@@ -220,6 +230,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     {
         if (isTurbo)
         {
+            ca.intensity.value = 1.0f;
+
             if(!camera_turbo_change)
             {
                 t = 0.0f;
@@ -238,7 +250,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
         else
         {
-            if(camera_turbo_change)
+            ca.intensity.value = 0.0f;
+
+            if (camera_turbo_change)
             {
                 t = 0.0f;
                 camera_turbo_change = false;
