@@ -237,7 +237,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
             colFactor += distFactorNormalized / 2f;
             colFactor += angleFactorNormalized / 2f;
-            colFactor *= velocityFactorNormalized;
+            colFactor += velocityFactorNormalized /2f;
 
             factor += colFactor;
         }
