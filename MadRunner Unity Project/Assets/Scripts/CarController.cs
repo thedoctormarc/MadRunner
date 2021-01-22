@@ -84,8 +84,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     [Range(45f, 90f)]
     float maxSlipStreamAngle = 90f;
     [SerializeField]
-    [Range(1.2f, 2f)]
-    float slipStreamVelocityExp = 1.5f;
+    [Range(1.1f, 1.34f)]
+    float slipStreamVelocityExp = 1.23f;
     [SerializeField]
     float approxTopSpeedWithSlipStream = 75f;
 
