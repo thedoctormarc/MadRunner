@@ -178,6 +178,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
 
         GetInput();
+        CheckReset();
         Motor();
         Steering();
         CheckTurbo();
@@ -185,7 +186,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         UpdateWheels();
         AdjustAudio();
         BrakeLights();
-        CheckReset();
     }
 
     private void AddSlipStream()
@@ -391,7 +391,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             Debug.Log("Car taking ownership of object from master so it can interact with it!");
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
- 
+
+        if (collision.collider.CompareTag("MainCamera"))
+        {
+            Debug.Log("COLLLLLLLLLLLLLLLL-----------------");
+            Vector3 dir_force = transform.position - collision.gameObject.transform.position;
+            dir_force.Normalize();
+
+            Rigidbody rb_col = collision.gameObject.GetComponent<Rigidbody>(); // TOFIX
+            rb_col.AddForce(dir_force /** rb.velocity.magnitude*/ * 50.0f, ForceMode.VelocityChange);
+            rb.AddForce(dir_force /** rb_col.velocity.magnitude*/ * 5.0f, ForceMode.VelocityChange);
+        }
     }
 
     void OnTriggerEnter(Collider other)
