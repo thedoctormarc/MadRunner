@@ -12,10 +12,16 @@ public class ScoreLogic : MonoBehaviour
     Text text;
     float time;
 
+    GameObject start_counter;
+    GameObject start_counter_gradient;
+
     void Start()
     {
         text = GetComponent<Text>();
         time = 0.0f;
+
+        start_counter = GameObject.Find("StartGameCounter");
+        start_counter_gradient = GameObject.Find("GradientIllumination");
     }
 
     void Update()
@@ -33,6 +39,17 @@ public class ScoreLogic : MonoBehaviour
             float milliseconds = time * 100.0f % 100.0f;
             string textTime = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes, (int)seconds, (int)milliseconds);
             text.text = textTime.ToString();
+        }
+
+        if(!started)
+        {
+            start_counter.SetActive(true);
+            start_counter_gradient.SetActive(true);
+        }
+        else
+        {
+            start_counter.SetActive(false);
+            start_counter_gradient.SetActive(false);
         }
     }
 }
