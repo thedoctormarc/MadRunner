@@ -21,6 +21,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     private bool isTurboPressedDown;
     private bool isTurboReleased;
 
+    private bool needsReset = false;
+
     public WheelCollider LF_Col, RF_Col, LB_Col, RB_Col;
     public Transform LF, RF, LB, RB;
 
@@ -183,6 +185,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         UpdateWheels();
         AdjustAudio();
         BrakeLights();
+        CheckReset();
     }
 
     private void AddSlipStream()
@@ -261,6 +264,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             isTurbo = Input.GetKey(KeyCode.LeftShift);
             isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
             isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
+            needsReset = Input.GetKeyDown(KeyCode.R);
         }
     }
 
@@ -363,6 +367,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
             left_turbo.SetActive(false);
             right_turbo.SetActive(false);
+        }
+    }
+
+    void CheckReset()
+    {
+        if(needsReset)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 10.0f, transform.position.z);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0.0f);
+
+            needsReset = false;
         }
     }
 
