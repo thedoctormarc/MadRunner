@@ -76,8 +76,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     float _sidewaysStifness;
 
     [SerializeField]
-    [Range(0.05f, 0.5f)]
-    float slipStreamStrength = 0.2f;
+    [Range(0.5f, 3.5f)]
+    float slipStreamStrength = 2f;
     [SerializeField]
     [Range(45f, 90f)]
     float maxSlipStreamAngle = 90f;
