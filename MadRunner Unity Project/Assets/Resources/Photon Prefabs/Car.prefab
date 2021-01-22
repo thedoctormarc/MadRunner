@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_laps: 3
-  current_lap: 1
+  current_lap: 0
 --- !u!114 &-6947003024641921832
 MonoBehaviour:
   m_ObjectHideFlags: 0

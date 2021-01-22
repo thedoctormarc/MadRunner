@@ -41,6 +41,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     public GameObject rearviewImage, rearviewBorder;
 
+    // Lap control
+    GameObject score;
+    ScoreLogic score_logic;
+
     // Lights
     GameObject rear_left_light;
     GameObject rear_right_light;
@@ -99,6 +103,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         // get rb values
         _angularDrag = rb.angularDrag;
         _sidewaysStifness = transform.Find("Wheels").Find("Colliders").GetChild(0).GetComponent<WheelCollider>().sidewaysFriction.stiffness;
+
+        score = GameObject.Find("Score");
+        score_logic = score.GetComponent<ScoreLogic>();
 
         aS = GetComponent<AudioSource>();
 
@@ -159,12 +166,15 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        isBreaking = Input.GetKey(KeyCode.Space);
-        isTurbo = Input.GetKey(KeyCode.LeftShift);
-        isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
-        isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
+        if(score_logic.started)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            isBreaking = Input.GetKey(KeyCode.Space);
+            isTurbo = Input.GetKey(KeyCode.LeftShift);
+            isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
+            isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
+        }
     }
 
     private void Steering()
