@@ -36,7 +36,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     public Rigidbody rb;
     public float rbVelocity = 0f;
-    public Vector3 rbVelocityVec;
 
     [Range(0.25f, 2.0f)]
     public float centerOfMassHeight = 0.25f;
@@ -120,7 +119,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             slipStreams = new List<Collider>();
             slipStreamP = transform.Find("SlipstreamParticles").GetComponent<ParticleSystem>();
             SetSlipStreamAlpha(0f);
-            rbVelocityVec = new Vector3();
         }
 
         rb.centerOfMass = new Vector3(0, centerOfMassHeight, 0);
@@ -236,17 +234,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             float angleFactorNormalized = (((rotDiff - 0f) * (1f - 0f)) / (maxSlipStreamAngle - 0f)) + 0f;
             angleFactorNormalized = 1f - angleFactorNormalized;
 
-            Vector3 otherVelVec = otherCar.GetComponent<CarController>().rbVelocityVec;
             float otherVel = otherCar.GetComponent<CarController>().rbVelocity;
-
-            var localVelVec = transform.InverseTransformDirection(rb.velocity);
-            var otherLocalVelVec = otherCar.transform.InverseTransformDirection(otherVelVec);
-
-            if(((localVelVec.z <= 0f) && otherLocalVelVec.z >= 0f) || ((otherLocalVelVec.z <= 0f) && localVelVec.z  >= 0f))
-            {
-                return;
-            }
-
             float velocitySq = Mathf.Pow(rb.velocity.magnitude, slipStreamVelocityExp);
             float otherVelocitySq = Mathf.Pow(otherVel, slipStreamVelocityExp);
             float velocitiesSq = velocitySq + otherVelocitySq;
@@ -254,9 +242,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             float velocityFactorNormalized = (((velocitiesSq - 0f) * (1f - 0f)) / (maxVelocitiesSq - 0f)) + 0f;
              
 
-            colFactor += distFactorNormalized / 2f;
-            colFactor += angleFactorNormalized / 2f;
-            colFactor *= velocityFactorNormalized;
+            colFactor += distFactorNormalized / 3f;
+            colFactor += angleFactorNormalized / 3f;
+            colFactor += velocityFactorNormalized / 3f;
+
+            Debug.Log("Slisptream distance factor: " + distFactorNormalized + ", angle factor:" + angleFactorNormalized + "and speed factor:" + velocityFactorNormalized);
 
             factor += colFactor;
         }
@@ -409,7 +399,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             return;
         }
 
-        Debug.Log("Setting the slipstream alpha to: " + normalizedFactor);
+    //    Debug.Log("Setting the slipstream alpha to: " + normalizedFactor);
         ParticleSystem.MainModule pModule = slipStreamP.main;
         Color newColor = pModule.startColor.color;
         newColor.a = normalizedFactor;
@@ -533,9 +523,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             stream.SendNext(left_turbo.activeSelf);
             stream.SendNext(right_turbo.activeSelf);
             stream.SendNext(rbVelocity);
-            stream.SendNext(rb.velocity.x);
-            stream.SendNext(rb.velocity.y);
-            stream.SendNext(rb.velocity.z);
             stream.SendNext(slipStreamP.main.startColor.color.a);
         }
         else if (stream.IsWriting == false && PV.IsMine == false)
@@ -548,9 +535,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             left_turbo.SetActive((bool)stream.ReceiveNext());
             right_turbo.SetActive((bool)stream.ReceiveNext());
             rbVelocity = (float)stream.ReceiveNext();
-            rbVelocityVec.x = (float)stream.ReceiveNext();
-            rbVelocityVec.y = (float)stream.ReceiveNext();
-            rbVelocityVec.z = (float)stream.ReceiveNext();
             SetSlipStreamAlpha((float)stream.ReceiveNext());
         }
     }
