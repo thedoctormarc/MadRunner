@@ -17,10 +17,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     private bool isTurbo;
     List<Collider> slipStreams;
 
-    // for interpolation
-    private bool isTurboPressedDown;
-    private bool isTurboReleased;
-
     private bool needsReset = false;
 
     public WheelCollider LF_Col, RF_Col, LB_Col, RB_Col;
@@ -56,6 +52,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Turbo
     GameObject left_turbo;
     GameObject right_turbo;
+
+    GameObject turbo_sound;
+    AudioSource turbo_sound_audio;
 
     float t = 0.0f;
     bool camera_turbo_change = false;
@@ -139,7 +138,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         pp_v = pp.GetComponent<PostProcessVolume>();
         ca = pp_v.profile.GetSetting<ChromaticAberration>();
 
-        
+        turbo_sound = transform.Find("TurboSound").gameObject;
+        turbo_sound_audio = turbo_sound.GetComponent<AudioSource>();
     }
 
     public void Start()
@@ -166,6 +166,20 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         {
             rearviewImage.SetActive(!rearviewImage.activeSelf);
             rearviewBorder.SetActive(!rearviewBorder.activeSelf);
+        }
+
+        // Turbo sound (needs to be done this way to be immediate)
+        if (score_logic.started)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                turbo_sound_audio.Play();
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                turbo_sound_audio.Stop();
+            }
         }
     }
 
@@ -220,7 +234,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
                 dist = maxDist;
             }
 
-                // NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+            // NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
             float distFactorNormalized = (((dist - minDist) * (1f - 0f)) / (maxDist - minDist)) + 0f;
             distFactorNormalized = 1f - distFactorNormalized;
 
@@ -262,8 +276,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             verticalInput = Input.GetAxis("Vertical");
             isBreaking = Input.GetKey(KeyCode.Space);
             isTurbo = Input.GetKey(KeyCode.LeftShift);
-            isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
-            isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
             needsReset = Input.GetKeyDown(KeyCode.R);
         }
     }
@@ -394,7 +406,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         if (collision.collider.CompareTag("MainCamera"))
         {
-            Debug.Log("COLLLLLLLLLLLLLLLL-----------------");
             Vector3 dir_force = transform.position - collision.gameObject.transform.position;
             dir_force.Normalize();
 
