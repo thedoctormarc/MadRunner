@@ -13719,6 +13719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BridgeSlope_Simple (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 39799cf03cd78bd4b96ed2f556aa8af9, type: 3}
+      propertyPath: m_TagString
+      value: ground
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 39799cf03cd78bd4b96ed2f556aa8af9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -474.6965
@@ -44305,6 +44309,10 @@ PrefabInstance:
     - target: {fileID: 100014, guid: 7d6b9877311d9b54d9b2807970618528, type: 3}
       propertyPath: m_Name
       value: Bridge_Simple_Curved (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 7d6b9877311d9b54d9b2807970618528, type: 3}
+      propertyPath: m_TagString
+      value: ground
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 7d6b9877311d9b54d9b2807970618528, type: 3}
       propertyPath: m_LocalPosition.x

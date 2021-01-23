@@ -15,6 +15,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     private float steerAngle;
     private bool isBreaking;
     private bool isTurbo;
+    private bool isGrounded = true;
     List<Collider> slipStreams;
 
     // for interpolation
@@ -261,7 +262,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
             isBreaking = Input.GetKey(KeyCode.Space);
-            isTurbo = Input.GetKey(KeyCode.LeftShift);
+            isTurbo = Input.GetKey(KeyCode.LeftShift) && isGrounded;
             isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
             isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
             needsReset = Input.GetKeyDown(KeyCode.R);
@@ -383,6 +384,20 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     void OnCollisionEnter(Collision collision) // if colliding with a dynamic prop, transfer ownership from master client to our client, so they can interact  
     {
+        if (this.PV.IsMine)
+        {
+            switch (collision.gameObject.tag)
+            {
+             
+                case "ground":
+                    {
+                        isGrounded = true;
+                        break;
+                    }
+            }
+            return;
+        }
+
         PhotonView PV = collision.gameObject.GetComponent<PhotonView>();
         CarController CC = collision.gameObject.GetComponent<CarController>();
 
@@ -396,17 +411,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     void OnTriggerEnter(Collider other)
     {
-        if(this.PV.IsMine)
-        {
-            if (other.gameObject.CompareTag("slipstream") == true)
-            {
-                slipStreams.Add(other);
-                return;
-            }
-        }
-    
-
-
         PhotonView PV = other.gameObject.GetComponent<PhotonView>();
         CarController CC = other.gameObject.GetComponent<CarController>();
 
@@ -414,12 +418,33 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         {
             Debug.Log("Car taking ownership of object from master so it can interact with it!");
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
-
-            if (other.gameObject.CompareTag("water") == true)
-            {
-                OnWater(true);
-            }
         }
+
+        if (this.PV.IsMine)
+        {
+            switch(other.gameObject.tag)
+            {
+                case "slipstream":
+                    {
+                        slipStreams.Add(other);
+                        break;
+                    }
+              
+                case "notground":
+                    {
+                        isGrounded = false;
+                        break;
+                    }
+                case "water":
+                    {
+                        OnWater(true);
+                        break;
+                    }
+            }
+        return;
+        }
+  
+
     }
 
    void OnCollisionExit(Collision collision)
