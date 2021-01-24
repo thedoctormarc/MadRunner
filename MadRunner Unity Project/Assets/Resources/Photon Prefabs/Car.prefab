@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 952042732899605533}
   - component: {fileID: 4623942455711083176}
   - component: {fileID: -6947003024641921832}
+  - component: {fileID: -4286526045050898633}
   m_Layer: 0
   m_Name: Car
   m_TagString: MainCamera
@@ -530,6 +531,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950b2521734651b43b9e30836c85243c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &-4286526045050898633
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344589945785226913}
+  m_Enabled: 1
 --- !u!1 &2389901167394434915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,7 +1622,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7972632548546592104}
   - component: {fileID: 7013563498496368836}
-  - component: {fileID: 7256648069085435515}
   - component: {fileID: 3260344834454042395}
   - component: {fileID: 2748015824217573184}
   m_Layer: 0
@@ -1680,14 +1688,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7256648069085435515
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542579808697160243}
-  m_Enabled: 1
 --- !u!114 &3260344834454042395
 MonoBehaviour:
   m_ObjectHideFlags: 0
