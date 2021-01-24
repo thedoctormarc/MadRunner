@@ -57,7 +57,7 @@ Properties{
 SubShader{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Tags{ "Queue" = "Geometry+800" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+Tags{ "Queue" = "Transparent+10" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 LOD 200
 Cull Off
 ZWrite On
