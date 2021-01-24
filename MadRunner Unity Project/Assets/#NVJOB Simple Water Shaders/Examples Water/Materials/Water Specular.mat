@@ -144,7 +144,7 @@ Material:
     - _Albedo2Flow: 0.3
     - _Albedo2Tiling: 2.3
     - _AlbedoContrast: 1.4
-    - _AlbedoIntensity: 3.53
+    - _AlbedoIntensity: 3.01
     - _Brightness: 1
     - _BumpScale: 1
     - _Contrast: 1
@@ -202,9 +202,9 @@ Material:
     - _ParallaxScale: 0.35
     - _Radius: 1
     - _Reflect: 1
-    - _ReflectionContrast: 1.1
-    - _ReflectionSaturation: 0.86
-    - _ReflectionStrength: 1.9
+    - _ReflectionContrast: 0.88
+    - _ReflectionSaturation: 0.53
+    - _ReflectionStrength: 1.27
     - _RefractionIntensity: 0.61
     - _RefractionSpeed: 1.61
     - _ReverseFlow: -5

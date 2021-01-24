@@ -88,6 +88,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     [Range(1.1f, 1.34f)]
     float slipStreamVelocityExp = 1.23f;
     [SerializeField]
+    [Range(0f, 5f)]
+    float slipStreamMinVelocityEquired = 1f;
+    [SerializeField]
     float approxTopSpeedWithSlipStream = 75f;
 
     // Slip particles
@@ -235,6 +238,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             float angleFactorNormalized = (((rotDiff - 0f) * (1f - 0f)) / (maxSlipStreamAngle - 0f)) + 0f;
             angleFactorNormalized = 1f - angleFactorNormalized;
 
+            if(rb.velocity.magnitude <= slipStreamMinVelocityEquired)
+            {
+                continue;
+            }
+
             float otherVel = otherCar.GetComponent<CarController>().rbVelocity;
             float velocitySq = Mathf.Pow(rb.velocity.magnitude, slipStreamVelocityExp);
             float otherVelocitySq = Mathf.Pow(otherVel, slipStreamVelocityExp);
@@ -321,7 +329,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     private void AdjustAudio() // TODO photon audio 
     {
-        aS.volume  =  Math.Max(0.2f, (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (approxTopSpeedWithSlipStream - 0f)) + 0f); // volume depends on speed
+        float factor = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (approxTopSpeedWithSlipStream - 0f)) + 0f;
+        Debug.Log("Speed, max and audio factor: " + rb.velocity.magnitude + ", " + approxTopSpeedWithSlipStream + ", " + factor);
+        aS.volume  =  Math.Max(0.2f, factor); 
         aS.pitch = 0.7f + aS.volume;
     }
 
