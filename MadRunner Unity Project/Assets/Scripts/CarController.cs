@@ -96,6 +96,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Slip particles
     ParticleSystem slipStreamP;
 
+    // force to add in fixed update (could be an array, for the moment only used in collision between cars)
+    Vector3 toAddForce;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;
@@ -115,9 +118,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             Destroy(GetComponentInChildren<Camera>().gameObject.transform.parent.gameObject); // destroy camera holder directly (both cameras)
             Destroy(rb);
             Destroy(GetComponent<AudioListener>());
+            GetComponent<BoxCollider>().isTrigger = true;
         }
         else
         {
+            toAddForce = new Vector3();
             GameManager.instance.onwPlayer = gameObject;
             playerNameText.transform.parent.gameObject.SetActive(false); // don't want to see my name/UI! Disable the canvas
             slipStreams = new List<Collider>();
@@ -190,6 +195,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         GetInput();
         Motor();
         Steering();
+        CheckForce();
         CheckTurbo();
         AddSlipStream();
         UpdateWheels();
@@ -327,10 +333,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         trans.position = pos;
     }
 
-    private void AdjustAudio() // TODO photon audio 
+    private void AdjustAudio()  
     {
         float factor = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (approxTopSpeedWithSlipStream - 0f)) + 0f;
-        Debug.Log("Speed, max and audio factor: " + rb.velocity.magnitude + ", " + approxTopSpeedWithSlipStream + ", " + factor);
         aS.volume  =  Math.Max(0.2f, factor); 
         aS.pitch = 1.15f + aS.volume;
     }
@@ -455,6 +460,12 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
 
+        if (this.PV.IsMine && PV && CC)
+        {
+            Debug.Log("COLLISION BETWEEN CARS");
+            GetForceAgainstCar(PV);
+        }
+        
         if (this.PV.IsMine)
         {
             switch(other.gameObject.tag)
@@ -482,7 +493,35 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     }
 
-   void OnCollisionExit(Collision collision)
+    [PunRPC]
+    void AddForceToCar(Vector3 force)
+    {
+        toAddForce = force;
+    }
+
+    void GetForceAgainstCar(PhotonView otherPlayerPV)
+    {
+        // schedule force to be added in fixed update
+        float intensity = 50f;
+        float velocityFactorNorm = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (approxTopSpeedWithSlipStream - 0f)) + 0f;
+        toAddForce = intensity * velocityFactorNorm * -transform.forward;
+
+
+        // schedule opposite force in the other car
+        otherPlayerPV.RPC("AddForceToCar", otherPlayerPV.Owner, -toAddForce);
+    }
+
+
+    private void CheckForce()
+    {
+        if (toAddForce.magnitude != 0f)
+        {
+            rb.AddForce(toAddForce, ForceMode.VelocityChange);
+            toAddForce = Vector3.zero;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
     {
         PhotonView PV = collision.gameObject.GetComponent<PhotonView>();
         CarController CC = collision.gameObject.GetComponent<CarController>();
