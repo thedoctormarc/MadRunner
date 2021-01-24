@@ -339,7 +339,8 @@ MonoBehaviour:
   slipStreamStrength: 0.2
   maxSlipStreamAngle: 90
   slipStreamVelocityExp: 1.5
-  approxTopSpeedWithSlipStream: 25
+  slipStreamMinVelocityEquired: 1
+  approxTopSpeedWithSlipStream: 75
 --- !u!54 &1344589945785226919
 Rigidbody:
   m_ObjectHideFlags: 0
