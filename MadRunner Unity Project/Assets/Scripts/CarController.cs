@@ -89,7 +89,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     float slipStreamVelocityExp = 1.23f;
     [SerializeField]
     [Range(0f, 5f)]
-    float slipStreamMinVelocityEquired = 1f;
+    float slipStreamMinVelocityRequired = 1f;
     [SerializeField]
     float approxTopSpeedWithSlipStream = 75f;
 
@@ -244,7 +244,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             float angleFactorNormalized = (((rotDiff - 0f) * (1f - 0f)) / (maxSlipStreamAngle - 0f)) + 0f;
             angleFactorNormalized = 1f - angleFactorNormalized;
 
-            if(rb.velocity.magnitude <= slipStreamMinVelocityEquired)
+            if(rb.velocity.magnitude <= slipStreamMinVelocityRequired)
             {
                 continue;
             }

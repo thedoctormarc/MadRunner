@@ -336,10 +336,10 @@ MonoBehaviour:
   rearviewImage: {fileID: 0}
   rearviewBorder: {fileID: 0}
   cam: {fileID: 7013563498496368836}
-  slipStreamStrength: 0.2
-  maxSlipStreamAngle: 90
+  slipStreamStrength: 5.29
+  maxSlipStreamAngle: 69.4
   slipStreamVelocityExp: 1.5
-  slipStreamMinVelocityEquired: 1
+  slipStreamMinVelocityRequired: 1
   approxTopSpeedWithSlipStream: 75
 --- !u!54 &1344589945785226919
 Rigidbody:
