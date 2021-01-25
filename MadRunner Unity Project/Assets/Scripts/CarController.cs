@@ -257,9 +257,9 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             float velocityFactorNormalized = (((velocitiesSq - 0f) * (1f - 0f)) / (maxVelocitiesSq - 0f)) + 0f;
              
 
-            colFactor += distFactorNormalized / 3f;
-            colFactor += angleFactorNormalized / 3f;
-            colFactor += velocityFactorNormalized / 3f;
+            colFactor += distFactorNormalized / 2f;
+            colFactor += angleFactorNormalized / 2f;
+            colFactor *= velocityFactorNormalized;
 
             Debug.Log("Slisptream distance factor: " + distFactorNormalized + ", angle factor:" + angleFactorNormalized + "and speed factor:" + velocityFactorNormalized);
 
