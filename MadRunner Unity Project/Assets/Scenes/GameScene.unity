@@ -27130,6 +27130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   started: 0
   time_to_start: 5
+  total_score: {fileID: 1605209163}
+  best_score: {fileID: 1276053533}
 --- !u!114 &796644064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46865,7 +46867,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Best Time: 0'
+  m_Text: 'Best Time: 00:00:00'
 --- !u!222 &1276053537
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -68153,7 +68155,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Total Time: 0'
+  m_Text: 'Total Time: 00:00:00'
 --- !u!222 &1605209167
 CanvasRenderer:
   m_ObjectHideFlags: 0

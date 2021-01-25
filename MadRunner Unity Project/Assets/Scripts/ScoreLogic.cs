@@ -11,9 +11,18 @@ public class ScoreLogic : MonoBehaviour
 
     Text text;
     float time;
+    float time_total;
+    float time_best;
 
     GameObject start_counter;
     GameObject start_counter_gradient;
+
+    // Other scores
+    public GameObject total_score;
+    public GameObject best_score;
+
+    Text total_score_text;
+    Text best_score_text;
 
     void Start()
     {
@@ -22,6 +31,9 @@ public class ScoreLogic : MonoBehaviour
 
         start_counter = GameObject.Find("StartGameCounter");
         start_counter_gradient = GameObject.Find("GradientIllumination");
+
+        total_score_text = total_score.GetComponent<Text>();
+        best_score_text = best_score.GetComponent<Text>();
     }
 
     void Update()
@@ -33,12 +45,12 @@ public class ScoreLogic : MonoBehaviour
 
         if(started)
         {
-            time += Time.deltaTime;
-            float minutes = time / 60.0f;
-            float seconds = time % 60.0f;
-            float milliseconds = time * 100.0f % 100.0f;
+            time_total += Time.deltaTime;
+            float minutes = time_total / 60.0f;
+            float seconds = time_total % 60.0f;
+            float milliseconds = time_total * 100.0f % 100.0f;
             string textTime = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes, (int)seconds, (int)milliseconds);
-            text.text = textTime.ToString();
+            total_score_text.text = "Total Time: " + textTime;
         }
 
         if(!started)
