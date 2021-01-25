@@ -12,13 +12,11 @@ public class SpeedLogic : MonoBehaviour
     Text text;
     Rigidbody rb;
     
-    float multiplier = 0.0f;
     float imperial_system_multiplier = 2.02f;
     float metric_system_multiplier = 4.5f;
 
     GameObject game_config;
     Metrics metrics;
-    bool is_imperial = false;
 
     void Start()
     {

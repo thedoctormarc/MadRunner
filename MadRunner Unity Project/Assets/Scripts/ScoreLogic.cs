@@ -12,7 +12,7 @@ public class ScoreLogic : MonoBehaviour
     Text text;
     public float time_current;
     float time_total;
-    float time_best;
+    public float time_best;
 
     GameObject start_counter;
     GameObject start_counter_gradient;
@@ -22,7 +22,9 @@ public class ScoreLogic : MonoBehaviour
     public GameObject best_score;
 
     Text total_score_text;
-    Text best_score_text;
+    public Text best_score_text;
+
+    public List<float> lap_times;
 
     void Start()
     {

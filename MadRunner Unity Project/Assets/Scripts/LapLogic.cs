@@ -30,6 +30,20 @@ public class LapLogic : MonoBehaviour
         if (current_lap < max_laps)
         {
             ++current_lap;
+
+            if (current_lap != 1)
+            {
+                score_logic_component.lap_times.Add(score_logic_component.time_current);
+                score_logic_component.lap_times.Sort();
+                score_logic_component.time_best = score_logic_component.lap_times[0];
+
+                float minutes_best = score_logic_component.time_best / 60.0f;
+                float seconds_best = score_logic_component.time_best % 60.0f;
+                float milliseconds_best = score_logic_component.time_best * 100.0f % 100.0f;
+                string string_time_best = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_best, (int)seconds_best, (int)milliseconds_best);
+                score_logic_component.best_score_text.text = "Best Lap: " + string_time_best;
+            }
+
             score_logic_component.time_current = 0.0f;
         }
 
