@@ -10,7 +10,7 @@ public class ScoreLogic : MonoBehaviour
     float time_to_start_timer = 0.0f;
 
     Text text;
-    float time;
+    public float time_current;
     float time_total;
     float time_best;
 
@@ -27,13 +27,16 @@ public class ScoreLogic : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        time = 0.0f;
+        time_current = 0.0f;
 
         start_counter = GameObject.Find("StartGameCounter");
         start_counter_gradient = GameObject.Find("GradientIllumination");
 
         total_score_text = total_score.GetComponent<Text>();
         best_score_text = best_score.GetComponent<Text>();
+
+        time_total = 0.0f;
+        time_best = 0.0f;
     }
 
     void Update()
@@ -45,12 +48,21 @@ public class ScoreLogic : MonoBehaviour
 
         if(started)
         {
+            // Total Time
             time_total += Time.deltaTime;
-            float minutes = time_total / 60.0f;
-            float seconds = time_total % 60.0f;
-            float milliseconds = time_total * 100.0f % 100.0f;
-            string textTime = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes, (int)seconds, (int)milliseconds);
-            total_score_text.text = "Total Time: " + textTime;
+            float minutes_total = time_total / 60.0f;
+            float seconds_total = time_total % 60.0f;
+            float milliseconds_total = time_total * 100.0f % 100.0f;
+            string string_time_total = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_total, (int)seconds_total, (int)milliseconds_total);
+            total_score_text.text = "Total Time: " + string_time_total;
+
+            // Current (Lap) Time
+            time_current += Time.deltaTime; // This will be reset when lapping
+            float minutes_current = time_current / 60.0f;
+            float seconds_current = time_current % 60.0f;
+            float milliseconds_current = time_current * 100.0f % 100.0f;
+            string string_time_current = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_current, (int)seconds_current, (int)milliseconds_current);
+            text.text = string_time_current;
         }
 
         if(!started)
