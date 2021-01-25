@@ -115,10 +115,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
         if (!PV.IsMine)
         {
-            Destroy(GetComponentInChildren<Camera>().gameObject.transform.parent.gameObject); // destroy camera holder directly (both cameras)
-            Destroy(rb);
-            Destroy(GetComponent<AudioListener>());
-            GetComponent<BoxCollider>().isTrigger = true;
+           Destroy(GetComponentInChildren<Camera>().gameObject.transform.parent.gameObject); // destroy camera holder directly (both cameras)
+           Destroy(rb);
+           Destroy(GetComponent<AudioListener>());
+          // GetComponent<BoxCollider>().isTrigger = true;
         }
         else
         {
@@ -177,7 +177,13 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.C) && PV.IsMine)
+        if (!PV.IsMine)
+        {
+            return;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.C) && PV.IsMine)
         {
             rearviewImage.SetActive(!rearviewImage.activeSelf);
             rearviewBorder.SetActive(!rearviewBorder.activeSelf);
@@ -186,7 +192,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     private void FixedUpdate()
     {
-        // TODO: return if PV not mine, Photon!!
         if (!PV.IsMine)
         {
             return;
