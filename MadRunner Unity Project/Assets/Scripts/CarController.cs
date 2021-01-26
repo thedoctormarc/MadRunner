@@ -63,7 +63,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // turbo
     [SerializeField]
     [Range(1f, 3f)]
-    float maxTurbo = 2f;
+    float maxTurbo = 3f;
 
     float currentTurboValue = 0f;
 
@@ -112,6 +112,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // force to add in fixed update (could be an array, for the moment only used in collision between cars)
     Vector3 toAddForce;
 
+    Image turboImage;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
@@ -136,6 +137,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
         else
         {
+            turboImage = GameObject.Find("TurboBar").transform.Find("Progress").GetComponent<Image>();
             toAddForce = new Vector3();
             GameManager.instance.onwPlayer = gameObject;
             playerNameText.transform.parent.gameObject.SetActive(false); // don't want to see my name/UI! Disable the canvas
@@ -403,7 +405,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             {
                 rb.AddForce(transform.forward * 3.5f, ForceMode.Acceleration);
             }
-          
+
+            SetTurboUIScale();
+
+
         }
         else
         {
@@ -425,6 +430,12 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
     }
 
+    void SetTurboUIScale()
+    {
+        Vector3 scale = turboImage.transform.localScale;
+        scale.x = currentTurboValue / maxTurbo;
+        turboImage.transform.localScale = scale;
+    }
 
     void CheckReset()
     {
@@ -548,6 +559,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         float temp = currentTurboValue;
         temp += t.pickupTurbo;
         currentTurboValue = (temp > maxTurbo) ? maxTurbo : temp;
+
+        SetTurboUIScale();
     }
 
 

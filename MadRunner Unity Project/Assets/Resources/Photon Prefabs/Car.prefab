@@ -391,7 +391,7 @@ MonoBehaviour:
   rb: {fileID: 1344589945785226919}
   rbVelocity: 0
   centerOfMassHeight: 0.45
-  maxTurbo: 2
+  maxTurbo: 3
   turboDrainFactor: 0.6
   cam: {fileID: 7013563498496368836}
   slipStreamStrength: 5.29
