@@ -202,7 +202,7 @@ Material:
     - _ParallaxScale: 0.35
     - _Radius: 1
     - _Reflect: 1
-    - _ReflectionContrast: 1.04
+    - _ReflectionContrast: 1.03
     - _ReflectionSaturation: 1.52
     - _ReflectionStrength: 1.82
     - _RefractionIntensity: 0.61
