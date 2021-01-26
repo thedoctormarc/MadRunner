@@ -168,9 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6810f2c9d933d4483db32d0145aeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupTurbo: 0
+  pickupTurbo: 1
   reloadTime: 10
-  currentReloadTime: 0
   active: 0
 --- !u!82 &2647973247347402604
 AudioSource:

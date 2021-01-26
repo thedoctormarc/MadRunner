@@ -63,9 +63,13 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // turbo
     [SerializeField]
     [Range(1f, 3f)]
-    public float maxTurbo = 2f;
+    float maxTurbo = 2f;
 
-    public float currentTurboValue = 0f;
+    float currentTurboValue = 0f;
+
+    [SerializeField]
+    [Range(0.2f, 1f)]
+    float turboDrainFactor = 0.6f;
 
     float t = 0.0f;
     bool camera_turbo_change = false;
@@ -302,7 +306,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
             isBreaking = Input.GetKey(KeyCode.Space);
-            isTurbo = Input.GetKey(KeyCode.LeftShift) && isGrounded;
+            isTurbo = Input.GetKey(KeyCode.LeftShift) && isGrounded && currentTurboValue > 0f;
             isTurboReleased = Input.GetKeyUp(KeyCode.LeftShift);
             isTurboPressedDown = Input.GetKeyDown(KeyCode.LeftShift);
             needsReset = Input.GetKeyDown(KeyCode.R);
@@ -389,7 +393,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             left_turbo.SetActive(true);
             right_turbo.SetActive(true);
 
-            rb.AddForce(transform.forward * 3.5f, ForceMode.Acceleration);
+            currentTurboValue -= Time.deltaTime * turboDrainFactor;
+
+            if (currentTurboValue <= 0f)
+            {
+                currentTurboValue = 0f;
+            }
+            else
+            {
+                rb.AddForce(transform.forward * 3.5f, ForceMode.Acceleration);
+            }
+          
         }
         else
         {

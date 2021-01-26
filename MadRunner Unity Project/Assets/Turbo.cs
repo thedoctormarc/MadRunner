@@ -7,14 +7,15 @@ public class Turbo : MonoBehaviour
 
     [SerializeField]
     [Range(1f, 3f)]
-    public float pickupTurbo;
+    public float pickupTurbo = 1f;
 
     [SerializeField]
     [Range(5f, 20f)]
     public float reloadTime = 10f;
 
-    public float currentReloadTime = 0f;
+    float currentReloadTime = 0f;
 
+    [HideInInspector]
     public bool active;
     MeshRenderer rend;
     AudioSource aS;
