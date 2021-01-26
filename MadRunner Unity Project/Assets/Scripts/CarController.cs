@@ -115,6 +115,10 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     Image turboImage;
 
+    // To check if finished race
+    public bool has_ended = false;
+    public int position_ended = -1;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;

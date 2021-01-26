@@ -393,6 +393,7 @@ MonoBehaviour:
   rbVelocity: 0
   centerOfMassHeight: 0.45
   maxTurbo: 3
+  turbo_sound: {fileID: 2161924335301153243}
   turboDrainFactor: 0.6
   cam: {fileID: 7013563498496368836}
   slipStreamStrength: 5.29
@@ -400,6 +401,8 @@ MonoBehaviour:
   slipStreamVelocityExp: 1.5
   slipStreamMinVelocityRequired: 1
   approxTopSpeedWithSlipStream: 75
+  has_ended: 0
+  position_ended: -1
 --- !u!54 &1344589945785226919
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -10,5 +10,7 @@ public class StartLineLogic : MonoBehaviour
         GameObject go = other.gameObject;
         LapLogic ll = go.GetComponent<LapLogic>();
         ll.AddLap();
+
+        CarController cc = go.GetComponent<CarController>();
     }
 }
