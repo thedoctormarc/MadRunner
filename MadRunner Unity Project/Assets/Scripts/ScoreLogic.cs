@@ -11,7 +11,7 @@ public class ScoreLogic : MonoBehaviour
 
     Text text;
     public float time_current;
-    float time_total;
+    public float time_total;
     public float time_best;
 
     GameObject start_counter;

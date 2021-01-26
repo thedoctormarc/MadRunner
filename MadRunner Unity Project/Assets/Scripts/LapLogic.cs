@@ -41,6 +41,11 @@ public class LapLogic : MonoBehaviour
         {
             ++current_lap;
 
+            if(current_lap == 1)
+            {
+                score_logic_component.time_total = 0.0f;
+            }
+
             if (current_lap != 1)
             {
                 score_logic_component.lap_times.Add(score_logic_component.time_current);
