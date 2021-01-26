@@ -17,12 +17,14 @@ public class Turbo : MonoBehaviour
 
     public bool active;
     MeshRenderer rend;
+    AudioSource aS;
 
     // Start is called before the first frame update
     void Start()
     {
         active = true;
         rend = GetComponent<MeshRenderer>();
+        aS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,11 @@ public class Turbo : MonoBehaviour
 
     public void SetActive(bool active)
     {
+       if (active == false)
+        {
+            aS.Play();
+        }
+
         this.active = active;
         rend.enabled = active;
         transform.GetChild(0).gameObject.SetActive(active);
