@@ -405,6 +405,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     {
         if(needsReset)
         {
+            rb.velocity = Vector3.zero;
+
             transform.position = new Vector3(transform.position.x, transform.position.y + 10.0f, transform.position.z);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0.0f);
 
