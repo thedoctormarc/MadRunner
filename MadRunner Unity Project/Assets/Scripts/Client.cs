@@ -40,20 +40,30 @@ public class Client : MonoBehaviourPunCallbacks
     [SerializeField]
     public FlexibleColorPicker cp;
 
+    bool spectator;
+
     private void Awake()
     {
         instance = this;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        DontDestroyOnLoad(gameObject);
     }
+
+    public void ToggleSpectator() => spectator = !spectator;
+
+    public bool IsSpectator() => spectator;
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
         if(s.buildIndex == 1) // game aka circuit
         {
-            GameObject go = PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            if(spectator == false)
+            {
+                GameObject go = PhotonNetwork.Instantiate(Path.Combine("Photon Prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
 
-            // pass the client car color to the car manager
-            go.GetComponent<PlayerManager>().Set(cp.color);
+                // pass the client car color to the car manager
+                go.GetComponent<PlayerManager>().Set(cp.color);
+            }
 
             // Instantiate dynamic rigidbody props
             if(PhotonNetwork.IsMasterClient == true)
