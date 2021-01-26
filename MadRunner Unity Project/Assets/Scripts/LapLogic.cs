@@ -16,6 +16,10 @@ public class LapLogic : MonoBehaviour
 
     CarController cc;
 
+    // For showing the final results of the race
+    GameObject results;
+    ShowResults results_component;
+
     void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -27,12 +31,17 @@ public class LapLogic : MonoBehaviour
         score_logic_component = score_logic.GetComponent<ScoreLogic>();
 
         cc = GetComponent<CarController>();
+
+        results = GameObject.Find("Results");
+        results_component = results.GetComponent<ShowResults>();
     }
 
     private void Update()
     {
         if(!cc.has_ended && score_logic_component.started)
             score_logic_component.CalculateTotalTime();
+
+        CheckShowResults();
     }
 
     public void AddLap()
@@ -80,6 +89,14 @@ public class LapLogic : MonoBehaviour
         else
         {
             text.text = "";
+        }
+    }
+
+    void CheckShowResults()
+    {
+        if (current_lap > max_laps)
+        {
+            results_component.EnableChildren();
         }
     }
 }

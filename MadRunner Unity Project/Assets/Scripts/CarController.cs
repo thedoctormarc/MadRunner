@@ -690,5 +690,4 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             c.stiffness = stiffness;
         }
     }
-
 }
