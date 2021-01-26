@@ -50,15 +50,6 @@ public class ScoreLogic : MonoBehaviour
 
         if(started)
         {
-            // Total Time
-            
-            time_total += Time.deltaTime;
-            float minutes_total = time_total / 60.0f;
-            float seconds_total = time_total % 60.0f;
-            float milliseconds_total = time_total * 100.0f % 100.0f;
-            string string_time_total = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_total, (int)seconds_total, (int)milliseconds_total);
-            total_score_text.text = "Total Time: " + string_time_total;
-
             // Current (Lap) Time
             time_current += Time.deltaTime; // This will be reset when lapping
             float minutes_current = time_current / 60.0f;
@@ -78,5 +69,15 @@ public class ScoreLogic : MonoBehaviour
             start_counter.SetActive(false);
             start_counter_gradient.SetActive(false);
         }
+    }
+
+    public void CalculateTotalTime()
+    {
+        time_total += Time.deltaTime;
+        float minutes_total = time_total / 60.0f;
+        float seconds_total = time_total % 60.0f;
+        float milliseconds_total = time_total * 100.0f % 100.0f;
+        string string_time_total = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_total, (int)seconds_total, (int)milliseconds_total);
+        total_score_text.text = "Total Time: " + string_time_total;
     }
 }

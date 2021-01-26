@@ -29,6 +29,12 @@ public class LapLogic : MonoBehaviour
         cc = GetComponent<CarController>();
     }
 
+    private void Update()
+    {
+        if(!cc.has_ended && score_logic_component.started)
+            score_logic_component.CalculateTotalTime();
+    }
+
     public void AddLap()
     {
         if (current_lap < max_laps)
