@@ -58,14 +58,15 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     GameObject left_turbo;
     GameObject right_turbo;
 
-
-
     // turbo
     [SerializeField]
     [Range(1f, 3f)]
     float maxTurbo = 3f;
 
     float currentTurboValue = 0f;
+
+    public GameObject turbo_sound;
+    AudioSource turbo_audio_source;
 
     [SerializeField]
     [Range(0.2f, 1f)]
@@ -170,7 +171,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         pp_v = pp.GetComponent<PostProcessVolume>();
         ca = pp_v.profile.GetSetting<ChromaticAberration>();
 
-        
+        turbo_audio_source = turbo_sound.GetComponent<AudioSource>();
     }
 
     public void Start()
@@ -203,6 +204,17 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         {
             rearviewImage.SetActive(!rearviewImage.activeSelf);
             rearviewBorder.SetActive(!rearviewBorder.activeSelf);
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(currentTurboValue > 0.0f)
+                turbo_audio_source.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            turbo_audio_source.Stop();
         }
     }
 
