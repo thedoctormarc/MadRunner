@@ -20,7 +20,7 @@ public class Client : MonoBehaviourPunCallbacks
     InputField playerInputName;
 
     [SerializeField]
-    InputField roomMenuNameText;
+    Text roomMenuNameText;
 
     [SerializeField]
     Transform roomListItemTransf;
