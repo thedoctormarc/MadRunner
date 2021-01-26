@@ -51,6 +51,7 @@ public class ScoreLogic : MonoBehaviour
         if(started)
         {
             // Total Time
+            
             time_total += Time.deltaTime;
             float minutes_total = time_total / 60.0f;
             float seconds_total = time_total % 60.0f;

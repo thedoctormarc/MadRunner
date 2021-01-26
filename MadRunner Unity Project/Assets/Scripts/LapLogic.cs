@@ -14,6 +14,8 @@ public class LapLogic : MonoBehaviour
     GameObject score_logic; // To reset lap time
     ScoreLogic score_logic_component; // To reset lap time
 
+    CarController cc;
+
     void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -23,6 +25,8 @@ public class LapLogic : MonoBehaviour
 
         score_logic = GameObject.Find("Score");
         score_logic_component = score_logic.GetComponent<ScoreLogic>();
+
+        cc = GetComponent<CarController>();
     }
 
     public void AddLap()
@@ -46,9 +50,25 @@ public class LapLogic : MonoBehaviour
 
             score_logic_component.time_current = 0.0f;
         }
+        else
+        {
+            if(current_lap == max_laps)
+            {
+                cc.has_ended = true;
+                ++current_lap;
+            }
+        }
 
         GameObject go_lap = GameObject.Find("Lap");
         Text text = go_lap.GetComponent<Text>();
-        text.text = "LAP: " + current_lap + "/" + max_laps;
+
+        if (!cc.has_ended)
+        {
+            text.text = "LAP: " + current_lap + "/" + max_laps;
+        }
+        else
+        {
+            text.text = "";
+        }
     }
 }
