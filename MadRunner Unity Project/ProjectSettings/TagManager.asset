@@ -8,6 +8,7 @@ TagManager:
   - slipstream
   - notground
   - ground
+  - turbo
   layers:
   - Default
   - TransparentFX

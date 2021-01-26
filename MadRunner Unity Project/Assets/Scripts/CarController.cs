@@ -44,7 +44,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     PhotonView PV;
 
-    public GameObject rearviewImage, rearviewBorder;
+    GameObject rearviewImage, rearviewBorder;
 
     // Lap control
     GameObject score;
@@ -57,6 +57,15 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Turbo
     GameObject left_turbo;
     GameObject right_turbo;
+
+
+
+    // turbo
+    [SerializeField]
+    [Range(1f, 3f)]
+    public float maxTurbo = 2f;
+
+    public float currentTurboValue = 0f;
 
     float t = 0.0f;
     bool camera_turbo_change = false;
@@ -98,6 +107,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     // force to add in fixed update (could be an array, for the moment only used in collision between cars)
     Vector3 toAddForce;
+
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
@@ -401,6 +411,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         }
     }
 
+
     void CheckReset()
     {
         if(needsReset)
@@ -458,6 +469,11 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
 
     void OnTriggerEnter(Collider other)
     {
+        if(other.isTrigger == false)
+        {
+            return;
+        }
+
         PhotonView PV = other.gameObject.GetComponent<PhotonView>();
         CarController CC = other.gameObject.GetComponent<CarController>();
 
@@ -493,12 +509,33 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
                         OnWater(true);
                         break;
                     }
+                case "turbo":
+                    {
+                        PickTurbo(other);
+                        break;
+                    }
             }
         return;
         }
   
 
     }
+
+    void PickTurbo(Collider collider)
+    {
+        Turbo t = collider.GetComponent<Turbo>();
+        if(t.active == false)
+        {
+            return;
+        }
+
+        t.SetActive(false);
+
+        float temp = currentTurboValue;
+        temp += t.pickupTurbo;
+        currentTurboValue = (temp > maxTurbo) ? maxTurbo : temp;
+    }
+
 
     [PunRPC]
     void AddForceToCar(Vector3 force)
