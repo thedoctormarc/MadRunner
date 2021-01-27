@@ -1,9 +1,10 @@
 # Mad Runner
 
-## VERSION
+## Version
+
 1.0
 
-## AUTHORS
+## Authors
 
 Gerard Marcos Freixas: 
 https://github.com/vsRushy
@@ -11,22 +12,22 @@ https://github.com/vsRushy
 Marc Doctor Pedrosa: 
 https://github.com/thedoctormarc
 
-## CONTROLS
+## Controls
 
-W,A,S,D or arrows: Move
+**W,A,S,D or arrows:** Move
 
-SPACE: Brake (stronger than S)
+**Space:** Brake (stronger than S)
 
-C: Toggle rearview camera
+**C:** Toggle rearview camera
 
-Left-shift: Turbo
+**Left-shift:** Turbo
 
-R: Respawn car
+**R:** Respawn car
 
-ESC: Controls
+**ESC:** Controls
 
-1-6 (spectator): Toggle camera
+**1-6 (spectator):** Toggle camera
 
-## INSTRUCTIONS
+## Instructions
 
 To succeed, be careful of water puddles: they make you drift! Also, obstacles are movable and there is "slipstream" behind other cars, so use the turbo and exploit it to the maximum level!
