@@ -8,7 +8,12 @@ public class StartLineLogic : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         GameObject go = other.gameObject;
-        LapLogic ll = go.GetComponent<LapLogic>();
-        ll.AddLap();
+
+        if(go.GetComponent<CarController>().GetPhotonView().Owner == PhotonNetwork.LocalPlayer)
+        {
+            LapLogic ll = go.GetComponent<LapLogic>();
+            ll.AddLap();
+        }
+
     }
 }
