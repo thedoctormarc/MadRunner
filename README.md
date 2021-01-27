@@ -36,10 +36,10 @@ https://github.com/thedoctormarc
 
 ## Instructions
 
-1) Create a lobby by pressing the "CREATE ROOM" button on the main menu.
+**1)** Create a lobby by pressing the "CREATE ROOM" button on the main menu.
 
-2) The other players can join the lobby by pressing the "JOIN ROOM" button on the main menu.
+**2)** The other players can join the lobby by pressing the "JOIN ROOM" button on the main menu.
 
-3) Change your name and the color of your car if desired! It's up to you.
+**3)** Change your name and the color of your car if desired! It's up to you.
 
-4) The player who created the room just needs to press the button "GO!" in order to start the game.
+**4)** The player who created the room just needs to press the button "GO!" in order to start the game.
