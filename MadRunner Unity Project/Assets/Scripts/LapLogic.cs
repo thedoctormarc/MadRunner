@@ -33,7 +33,7 @@ public class LapLogic : MonoBehaviour
 
         cc = GetComponent<CarController>();
 
-        results = GameObject.Find("Results");
+        results = GameObject.Find("ResultsGui");
         results_component = results.GetComponent<ShowResults>();
     }
 
@@ -47,7 +47,7 @@ public class LapLogic : MonoBehaviour
 
     public void AddLap()
     {
-            if (current_lap < max_laps)
+        if (current_lap < max_laps)
         {
             ++current_lap;
 
@@ -67,17 +67,15 @@ public class LapLogic : MonoBehaviour
                 float milliseconds_best = score_logic_component.time_best * 100.0f % 100.0f;
                 string_time_best = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_best, (int)seconds_best, (int)milliseconds_best);
                 score_logic_component.best_score_text.text = "Best Lap: " + string_time_best;
-
-
-                if (current_lap == max_laps)
-                {
-                    cc.has_ended = true;
-                    ++current_lap;
-                    GameObject.Find("Results").GetComponent<ResultManager>().CallAddResult(PhotonNetwork.NickName, string_time_best);
-                }
             }
 
             score_logic_component.time_current = 0.0f;
+        }
+        else if (current_lap == max_laps)
+        {
+            cc.has_ended = true;
+            ++current_lap;
+            GameObject.Find("Results").GetComponent<ResultManager>().CallAddResult(PhotonNetwork.NickName, string_time_best);
         }
 
         GameObject go_lap = GameObject.Find("Lap");
@@ -97,6 +95,7 @@ public class LapLogic : MonoBehaviour
     {
         if (current_lap > max_laps)
         {
+            results_component.Set();
             results_component.EnableChildren();
         }
     }

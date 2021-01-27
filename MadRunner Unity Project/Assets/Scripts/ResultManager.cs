@@ -6,8 +6,7 @@ using Photon.Realtime;
 
 public class ResultManager : MonoBehaviourPunCallbacks
 {
-
-    Dictionary<string, string> results;
+    public Dictionary<string, string> results;
     PhotonView PV;
 
     // Start is called before the first frame update
