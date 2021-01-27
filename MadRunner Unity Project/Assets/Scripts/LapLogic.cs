@@ -67,6 +67,7 @@ public class LapLogic : MonoBehaviour
             {
                 cc.has_ended = true;
                 ++current_lap;
+                GameObject.Find("Results_Joined").GetComponent<ResultsJoined>().CallAddResult(PhotonNetwork.NickName, score_logic_component.time_total);
             }
         }
 
