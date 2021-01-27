@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon;
+using Photon.Realtime;
+using Photon.Pun;
 
-public class Turbo : MonoBehaviour
+public class Turbo : MonoBehaviourPunCallbacks
 {
 
     [SerializeField]
@@ -20,9 +23,12 @@ public class Turbo : MonoBehaviour
     MeshRenderer rend;
     AudioSource aS;
 
+    PhotonView PV;
+
     // Start is called before the first frame update
     void Start()
     {
+        PV = GetComponent<PhotonView>();
         active = true;
         rend = GetComponent<MeshRenderer>();
         aS = GetComponent<AudioSource>();
@@ -31,19 +37,30 @@ public class Turbo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(active == false)
+        if(PhotonNetwork.IsMasterClient == true)
         {
-            if((currentReloadTime += Time.deltaTime) >= reloadTime)
+            if (active == false)
             {
-                currentReloadTime = 0f;
-                SetActive(true);
+                if ((currentReloadTime += Time.deltaTime) >= reloadTime)
+                {
+                    currentReloadTime = 0f;
+                    InvokeSetActive(true);
+                }
             }
         }
+
     }
 
-    public void SetActive(bool active)
+   public void InvokeSetActive(bool active)
     {
-       if (active == false)
+        SetActive(active);
+        PV.RPC("SetActive", RpcTarget.Others, active, false);
+    }
+
+    [PunRPC]
+    public void SetActive(bool active, bool playAudio = true)
+    {
+       if (active == false && playAudio == true)
         {
             aS.Play();
         }

@@ -110,9 +110,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     // Slip particles
     ParticleSystem slipStreamP;
 
-    // force to add in fixed update (could be an array, for the moment only used in collision between cars)
-    Vector3 toAddForce;
-
     Image turboImage;
 
     // To check if finished race
@@ -143,7 +140,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         else
         {
             turboImage = GameObject.Find("TurboBar").transform.Find("Progress").GetComponent<Image>();
-            toAddForce = new Vector3();
             GameManager.instance.onwPlayer = gameObject;
             playerNameText.transform.parent.gameObject.SetActive(false); // don't want to see my name/UI! Disable the canvas
             slipStreams = new List<Collider>();
@@ -232,7 +228,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         GetInput();
         Motor();
         Steering();
-        CheckForce();
         CheckTurbo();
         AddSlipStream();
         UpdateWheels();
@@ -523,12 +518,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             Debug.Log("Car taking ownership of object from master so it can interact with it!");
             PV.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
-
-        if (this.PV.IsMine && PV && CC)
-        {
-            Debug.Log("COLLISION BETWEEN CARS");
-            GetForceAgainstCar(PV);
-        }
         
         if (this.PV.IsMine)
         {
@@ -570,7 +559,7 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
             return;
         }
 
-        t.SetActive(false);
+        t.InvokeSetActive(false);
 
         float temp = currentTurboValue;
         temp += t.pickupTurbo;
@@ -579,34 +568,6 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
         SetTurboUIScale();
     }
 
-
-    [PunRPC]
-    void AddForceToCar(Vector3 force)
-    {
-        toAddForce = force;
-    }
-
-    void GetForceAgainstCar(PhotonView otherPlayerPV)
-    {
-        // schedule force to be added in fixed update
-        float intensity = 50f;
-        float velocityFactorNorm = (((rb.velocity.magnitude - 0f) * (1f - 0f)) / (approxTopSpeedWithSlipStream - 0f)) + 0f;
-        toAddForce = intensity * velocityFactorNorm * -transform.forward;
-
-
-        // schedule opposite force in the other car
-        otherPlayerPV.RPC("AddForceToCar", otherPlayerPV.Owner, -toAddForce);
-    }
-
-
-    private void CheckForce()
-    {
-        if (toAddForce.magnitude != 0f)
-        {
-            rb.AddForce(toAddForce, ForceMode.VelocityChange);
-            toAddForce = Vector3.zero;
-        }
-    }
 
     void OnCollisionExit(Collision collision)
     {
