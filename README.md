@@ -7,6 +7,12 @@ Mad Runner is an online video game in which you get to control a fast and agile 
 To succeed, be careful of water puddles: they make you drift! Also, obstacles are movable and there is "slipstream" behind other cars, so use the turbo and exploit it to the maximum level!
 
 
+## Repository
+
+The source code of the project is open to the public on the following link:
+https://github.com/thedoctormarc/MadRunner/
+
+
 ## Version
 
 1.0
