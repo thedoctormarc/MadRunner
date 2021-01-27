@@ -116,6 +116,8 @@ public class CarController : MonoBehaviourPunCallbacks, IPunInstantiateMagicCall
     public bool has_ended = false;
     public int position_ended = -1;
 
+    public PhotonView GetPhotonView() => PV;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;
