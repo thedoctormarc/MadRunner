@@ -10,6 +10,7 @@ public class LapLogic : MonoBehaviour
 
     public int max_laps = 3;
     public int current_lap = 1;
+    string string_time_best;
 
     GameObject score_logic; // To reset lap time
     ScoreLogic score_logic_component; // To reset lap time
@@ -37,7 +38,7 @@ public class LapLogic : MonoBehaviour
 
     public void AddLap()
     {
-        if (current_lap < max_laps)
+            if (current_lap < max_laps)
         {
             ++current_lap;
 
@@ -55,19 +56,19 @@ public class LapLogic : MonoBehaviour
                 float minutes_best = score_logic_component.time_best / 60.0f;
                 float seconds_best = score_logic_component.time_best % 60.0f;
                 float milliseconds_best = score_logic_component.time_best * 100.0f % 100.0f;
-                string string_time_best = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_best, (int)seconds_best, (int)milliseconds_best);
+                string_time_best = string.Format("{0:00}:{1:00}:{2:00}", (int)minutes_best, (int)seconds_best, (int)milliseconds_best);
                 score_logic_component.best_score_text.text = "Best Lap: " + string_time_best;
+
+
+                if (current_lap == max_laps)
+                {
+                    cc.has_ended = true;
+                    ++current_lap;
+                    GameObject.Find("Results").GetComponent<ResultManager>().CallAddResult(PhotonNetwork.NickName, string_time_best);
+                }
             }
 
             score_logic_component.time_current = 0.0f;
-        }
-        else
-        {
-            if(current_lap == max_laps)
-            {
-                cc.has_ended = true;
-                ++current_lap;
-            }
         }
 
         GameObject go_lap = GameObject.Find("Lap");
